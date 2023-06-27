@@ -1,0 +1,115 @@
+HTTP/1.1 200 OK
+Date: Sun, 25 Jun 2023 17:14:04 GMT
+Content-Type: text/html; charset=utf-8
+Server: Kestrel
+Transfer-Encoding: chunked
+
+f67
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bandai Namco Launcher</title>
+    <link rel="stylesheet" href="css/common.css?v=YBm2RViZPwDx7vyYHf5lt58nzUxFoVI8byEtjw4puPE">
+    <link rel="stylesheet" href="css/vendor.css?v=Tw7avMyUk512GzXNszFsWou8RmrOqbPvKIbhZ8igif8" />
+    
+    <link rel="stylesheet" href="css/code-input.css?v=U5V-oyAcGTrG8-pk9FG0EtewCkVC5tgIhG92qCLkYGQ" />
+
+    <link rel="stylesheet" href="css/site.css?v=_1dtMnr8SH989vtkrmoBfQFcx86zD37Bv4_Kagby9R4" />
+</head>
+<body style="overflow:hidden;">
+    <div class="Container">
+        <div class="Header ">
+            <div class="Header_inner">
+                <div class="WindowControl">
+                        <div class="WindowControl__minimizeButton"><img src="img/index/WindowControl__minimizeButton.png"></div>
+                    <div class="WindowControl__closeButton">
+                        <img src="img/index/WindowControl__closeButton.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+<div class="wide_display">
+</div>
+
+    </div>
+    
+
+
+    <script>
+        window.nodeRequire = require;
+        delete window.require;
+        delete window.exports;
+        delete window.module;
+        const ipcRenderer = window.nodeRequire('electron').ipcRenderer;
+    </script>
+    
+    
+        <script src="cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+<script>(window.jQuery||document.write("\u003Cscript src=\u0022lib/jquery/dist/jquery.min.js\u0022 crossorigin=\u0022anonymous\u0022 integrity=\u0022sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\u0022\u003E\u003C/script\u003E"));</script>
+    
+    <script src="js/base.js?v=g2WKkecIQH8UzohoPbk1bx0CEcwF--LBPw__aIFCtCY"></script>
+    <script>
+        const windowtype = "ContentLogin";
+
+        const DIALOGTYPE_ALERT = 1;
+        const DIALOGTYPE_CONFIRM = 0;
+
+        const DIALOGLEVEL_INFO = 0;
+        const DIALOGLEVEL_WARNING = 1;
+        const DIALOGLEVEL_ERROR = 2;
+
+        const WINDOW_TYPE_LIST = [
+                "Main",
+                "Login",
+                "Sub",
+                "Logout",
+                "Toast",
+                "Install",
+                "Social",
+                "Dialog",
+                "Maintenance",
+                "Init",
+                "Update",
+                "LoginInner",
+                "ContentLogin",
+        ];
+            const HEADER_BACKGROUND_COLOR = "#202536";
+
+            const HEADER_FONT_COLOR = "white";
+
+        function _initHeader(canMinimize) {
+            headerColorSet(HEADER_BACKGROUND_COLOR, HEADER_FONT_COLOR);
+            let _winCtrlCloseBtn = document.querySelector(".WindowControl__closeButton");
+            if (_winCtrlCloseBtn) {
+                _winCtrlCloseBtn.addEventListener("click", function () {
+                    windowActionClose(windowtype);
+                });
+            }
+            if (canMinimize) {
+                let _winCtrlMinimizeBtn = document.querySelector(".WindowControl__minimizeButton");
+                if (_winCtrlMinimizeBtn) {
+                    _winCtrlMinimizeBtn.addEventListener("click", function () {
+                        windowActionMinimize(windowtype);
+                    });
+                }
+            }
+        }
+
+        $(function () {
+                _initHeader(true);
+        });
+    </script>
+    
+    <script src="lib/TweenMax.min.js?v=AQZPawadwCNDliCmx87HOQvU2OV5CACZywp2lo9LwTE"></script>
+    <script src="js/post_message.js?v=lSwYpaF6tLeLnjkaTLM88JuYOI0EIL8A9pYPMV9--rY"></script>
+    <script src="js/login.js?v=a5CJC0ogv3l5a_2if8h6h8ZRNPgyznEpyn4g6fgLmv8"></script>
+
+</body>
+</html>
+
+0
+

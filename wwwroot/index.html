@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bandai Namco Launcher</title>
+    <link rel="stylesheet" href="css/common.css?v=YBm2RViZPwDx7vyYHf5lt58nzUxFoVI8byEtjw4puPE">
+    <link rel="stylesheet" href="css/vendor.css?v=Tw7avMyUk512GzXNszFsWou8RmrOqbPvKIbhZ8igif8" />
+    <link rel="stylesheet" href="css/index.css?v=MmxN01_qBMd0qr3wXnx9Er7hr_9fDJIKtYwtcUmmnNU" />
+    <link rel="stylesheet" href="css/setting.css?v=9cvM8WVwOHNVtwwl-RFpEq_Bp7tDjEsFqfLPJFiO0K0" />
+    <link rel="stylesheet" href="css/site.css?v=_1dtMnr8SH989vtkrmoBfQFcx86zD37Bv4_Kagby9R4" />
+</head>
+<body>
+    <div class="Preload">
+        <div class="Preload__inner">
+            <div></div>
+            <img src="img/common/Logo_1-4.png" />
+        </div>
+    </div>
+    <div class="Container -unvisible">
+        <div class="ProgressInfo">
+            <div class="ProgressInfo__mask">
+                <div class="ProgressTime">
+                    <span class="ProgressTime__title">残り時間</span>
+                    <span class="ProgressTime__time load-text">-分</span>
+                </div>
+                <div class="ProgressBar">
+                    <div class="ProgressBar__bar">
+                        <div class="ProgressBar__bar--present"></div>
+                    </div>
+                </div>
+                <div class="ProgressVolume">- / -</div>
+            </div>
+        </div>
+        <div class="HeaderReserve">
+            <div class="Header_inner">
+                <div class="Notification">
+                    <div class="Notification__gameTitle"><span></span></div>
+                    <div class="HeaderMaintenanceMessage">
+                        <div class="HeaderMaintenanceMessage__message">
+                            <span class="Notification__maintenanceIcon"></span>
+                            <span class="Notification__maintenanceMessage"></span>
+                        </div>
+                    </div>
+                    <div class="Notification__list"></div>
+                </div>
+                <div class="Operation">
+                    <div class="Operation__item Operation__userIcon">
+                        <img src="">
+                        <div class="Operation__userIcon--noticeCircle c_hide">
+                            <div class="Operation__userIcon--noticeCircle--bg">
+                                <div class="Operation__userIcon--notice">!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Operation__item Operation__chatIcon omit_202102">
+                        <img src="img/index/Operation__chatIcon.png?1">
+                        <div class="Operation__userIcon--noticeCircle c_hide">
+                            <div class="Operation__userIcon--chatNoticeCircle--bg">
+                                <div class="Operation__userIcon--notice">!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="Operation__item Operation__chatIconText omit_202102">
+                        <span class="Operation__chatIconTextNumber"></span>
+                        <span class="Operation__chatIconTextSituation">人プレイ中</span>
+                    </a>
+                    <div class="Operation__item Operation__level c_hide">
+                        <img class="Operation__level--logo" src="img/index/Operation__level--logo.png">
+                        <div class="Operation__level--level">0</div>
+                    </div>
+                    <div class="Operation__item Operation__coin c_hide">
+                        <img class="Operation__level--logo" src="img/index/UserInfo__coinIcon.png">
+                        <div class="Operation__coinQuantity">0</div>
+                    </div>
+                    <div class="Operation__item Operation__setting">
+                        <img src="img/index/Operation__setting.png?1">
+                    </div>
+                </div>
+                <div class="WindowControl">
+                    <div class="WindowControl__minimizeButton"><img src="img/index/WindowControl__minimizeButton.png"></div>
+                    <div class="WindowControl__maxmizeButton c_window_maximize"><img src="img/index/WindowControl__maximizeButton.png"></div>
+                    <div class="WindowControl__closeButton"><img src="img/index/WindowControl__closeButton.png"></div>
+                </div>
+            </div>
+        </div>
+        <div class="UserInfo__backGround">
+            <div class="UserInfo" data-simplebar>
+                <div class="UserInfo__head">
+                    <div class="UserInfo__headUser">
+                        <div class="UserInfo__headUserInfo">
+                            <div class="UserInfo__headUserIcon">
+                                <img src="">
+                            </div>
+                            <div class="UserInfo__headUserText">
+                                <div class="UserInfo__headUserName">&nbsp;</div>
+                                <div class="UserInfo__headUserStatus">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="UserInfo__headEditButton"><img src="img/index/UserInfo__headEditButton.png"></div>
+                    </div>
+                    <div class="UserInfo__headUserComment c_hide">&nbsp;</div>
+                </div>
+                <div class="UserInfo__gameList omit_202102"></div>
+                <div class="UserInfo__friendCode omit_202102">
+                    <div class="UserInfo__friendCodeInfo">
+                        <img class="UserInfo__friendCodeIcon" src="img/index/UserInfo__friendCodeIcon.png">
+                        <div class="UserInfo__friendCodeHeading">フレンドコード</div>
+                    </div>
+                    <div class="UserInfo__friendCodeNumber"></div>
+                </div>
+                <div class="UserInfo__logoutButton">
+                    <a class="UserInfo__logoutButtonLink">ログアウト</a>
+                </div>
+            </div>
+        </div>
+        <div class="Setting"></div>
+        <div class="Contents">
+    <div class="Contents_mask">
+        <div class="SideMenu">
+            <div class="SideMenu__logo">
+                <img class="SideMenu__logoImage" src="img/common/Logo_2-4.png">
+            </div>
+            <div class="SideMenu__gameSelectors">
+                <div class="GameSelector">
+                    <div class="GameSelector__container">
+                        <div class="GameSelector__heading">
+                            <div class="GameSelector__headingImage--text">DOWNLOAD</div>
+                        </div>
+                        <div class="GameSelector__list" id="side_pc_contents"></div>
+                    </div>
+                </div>
+                <div class="GameSelector -browser">
+                    <div class="GameSelector__container">
+                        <div class="GameSelector__heading -browser">
+                            <div class="GameSelector__headingImage--text">BROWSER</div>
+                        </div>
+                        <div class="GameSelector__list -browser" id="side_browser_contents"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="SideMenu__appVersion">
+                <div class="SideMenu__launcherFAQ">
+                    <a href="https://object-bnolauncher-ct.bandainamco-ol.jp/html/faq/index.html" target="_blank">ランチャーに関するFAQ ↗</a>
+                </div>            
+                <span>Ver. 2.0.24</span>
+            </div>
+        </div>
+        <iframe id="child-frame" class="Web" src="" allowtransparency="true" name="Web"></iframe>
+    </div>
+</div>
+
+<div class="GameCover__container">
+    <ul class="GameCover__container--main">
+        <li class="GameCover__container--top"></li>
+        <li class="GameCover__container--bottom"></li>
+    </ul>
+    <ul class="GameCover__container--sub">
+        <li class="GameCover__container--sub--elm"><span></span></li>
+        <li class="GameCover__container--sub--elm"><span></span></li>
+        <li class="GameCover__container--sub--elm"><span></span></li>
+        <li class="GameCover__container--sub--elm"><span></span></li>
+        <li class="GameCover__container--sub--elm"><span></span></li>
+    </ul>
+    <div class="loading"><span></span><span></span><span></span><span></span><span></span></div>
+</div>
+<div class="frame__shadow"></div>
+<div class="OptionPanel__bk"></div>
+<div class="Footer">
+    <div class="Footer__cut"></div>
+    <div class="OptionPanel close">
+        <ul class="OptionPanel__menu">
+            <li class="OptionPanel__item option_shortcuts_item installed_item">
+                <a class="OptionPanel__itemTitle no_before" data-optiontype="create_shortcuts">ショートカットの作成</a>
+            </li>
+            <li class="OptionPanel__item installed_item">
+                <a class="OptionPanel__itemTitle -can-open">オートアップデート</a>
+                <div class="OptionPanel__contents">
+                    <label class="OptionPanel__content">
+                        <div class="OptionPanel__content__inputRadio">
+                            <input class="RadioButton ignore_rh" type="radio" name="op_autoupdate" data-target="auto_update" id="autoupdate--on" value="true" checked>
+                            <label class="SettingMain__settingItem--inputlabel ignore_rh" for="autoupdate--on">ON</label>
+                        </div>
+                    </label>
+                    <label class="OptionPanel__content">
+                        <div class="OptionPanel__content__inputRadio">
+                            <input class="RadioButton ignore_rh" type="radio" name="op_autoupdate" data-target="auto_update" id="autoupdate--off" value="false">
+                            <label class="SettingMain__settingItem--inputlabel ignore_rh" for="autoupdate--off">OFF</label>
+                        </div>
+                    </label>
+                </div>
+            </li>
+            <li class="OptionPanel__item installed_item">
+                <a class="OptionPanel__itemTitle no_before changeInstallDirectory" data-optiontype="change_location">インストール先の変更</a>
+            </li>
+            <li class="OptionPanel__item omit_202102">
+                <a class="OptionPanel__itemTitle -can-open">公開範囲</a>
+                <div class="OptionPanel__contents">
+                        <label class="OptionPanel__content">
+                            <div class="OptionPanel__content__inputRadio">
+                                <input class="RadioButton ignore_rh" type="radio" name="ds_scope" id="ds_scop--All" data-updatetype="4" value="0">
+                                <label class="SettingMain__settingItem--inputlabel ignore_rh" for="ds_scop--All">全体に公開</label>
+                            </div>
+                        </label>
+                        <label class="OptionPanel__content">
+                            <div class="OptionPanel__content__inputRadio">
+                                <input class="RadioButton ignore_rh" type="radio" name="ds_scope" id="ds_scop--FriendOnly" data-updatetype="4" value="1">
+                                <label class="SettingMain__settingItem--inputlabel ignore_rh" for="ds_scop--FriendOnly">フレンドのみ公開</label>
+                            </div>
+                        </label>
+                        <label class="OptionPanel__content">
+                            <div class="OptionPanel__content__inputRadio">
+                                <input class="RadioButton ignore_rh" type="radio" name="ds_scope" id="ds_scop--None" data-updatetype="4" value="2">
+                                <label class="SettingMain__settingItem--inputlabel ignore_rh" for="ds_scop--None">公開しない</label>
+                            </div>
+                        </label>
+                </div>
+            </li>
+            <li class="OptionPanel__item installed_item"><a class="OptionPanel__itemTitle no_before" data-optiontype="uninstall">アンインストール</a></li>
+            <li class="OptionPanel__item installed_item"><a class="OptionPanel__itemTitle no_before" data-optiontype="file_repair">ファイルの修復</a></li>
+            <li class="OptionPanel__item option_support_page_item"><a class="OptionPanel__itemTitle no_before" data-optiontype="support_page">サポートページ</a></li>
+            <li class="OptionPanel__item installed_item c_hide" id="debug_login_code_panel">
+                <a class="OptionPanel__itemTitle -can-open">固定認可コード</a>
+                <div class="OptionPanel__contents">
+                    <div id="right_bottom_copytext">コピーしました</div>
+                    <label class="OptionPanel__content">
+                        <div class="OptionPanel__content__inputRadio">
+                            <input class="ignore_rh" type="hidden" id="debug_login_code" data-target="debug_login_code" value="">
+                            <label id="debug_login_code_copy" class="SettingMain__settingItem--inputlabel ignore_rh"></label>
+                        </div>
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="Footer__mainMenu">
+        <div id="c_content_tabs" class="MainMenu c_hide"></div>
+    </div>
+    <div class="Footer__actions">
+        <div class="Action">
+            <div id="btn_content_install" class="Action__install pointer_events_none">
+                <div class="Action__item">
+                    <div class="Action__icon"><img src="img/index/ActionButton__icon--install.svg"></div><div class="Action__title--install">インストール</div>
+                </div>
+            </div>
+            <div class="Action__option ignore_rh">
+                <div class="Action__item ignore_rh">
+                    <div class="Action__icon ignore_rh"><img src="img/index/ActionButton__icon--option.svg"></div><div class="Action__title--option">メニュー</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    <div class="Achievement">
+        <div class="Achievement__modalWindow">
+            <div class="Achievement__container">
+                <div class="Achievement__user">
+                    <div class="Achievement__levelContainer">
+                        <div class="Achievement__levelIcon">
+                            <img src="img/achievement/Achievement__icon.png">
+                            <p class="Achievement__level">14</p>
+                        </div>
+                        <div class="Achievement__levelBarContainer">
+                            <p>26%</p>
+                            <div class="Achievement__levelBar">
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Achievement__trophyContainer">
+                        <div class="Achievement__trophy"><img src="img/level/Level__trophy--platinum.png"><span>2</span></div>
+                        <div class="Achievement__trophy"><img src="img/level/Level__trophy--gold.png"><span>2</span></div>
+                        <div class="Achievement__trophy"><img src="img/level/Level__trophy--silver.png"><span>2</span></div>
+                        <div class="Achievement__trophy"><img src="img/level/Level__trophy--bronze.png"><span>2</span></div>
+                    </div>
+                </div>
+            </div>
+            <div id="Achievement__contents">
+            </div>
+        </div>
+    </div>
+    <div class="CoinModal__backGround">
+        <div class="CoinModal">
+            <div class="CoinModal__header">
+                <h3 class="CoinModal__headerTitle">コイン交換所</h3>
+                <div class="CoinModal__headerClose"><img src="img/shop-coin/CoinModal__headerClose.png"></div>
+            </div>
+            <div class="CoinModal__coinContainer">
+                <div class="CoinModal__coinIcon"><img src="img/shop-coin/CoinModal__coinIcon.png"></div>
+                <div class="CoinModal__coinQuantity">></div>
+            </div
+255f
+>
+            <div class="CoinModal__container">
+                <ul class="CoinModal__titleList">
+                    <li class="choice" data-filter="all">ALL</li>
+                    <li data-filter="acquire">所持</li>
+                    <li data-filter="unacquired">未所持</li>
+                </ul>
+                <div class="CoinModal__productItems">
+                </div>
+                <div class="SCoinModal__productScrollBarInner">
+                    <div class="SCoinModal__productContainerScrollBarInner" data-simplebar>
+                        <div class="CoinModal__productContainer">
+                        </div>
+                    </div>
+                </div>
+                <div class="CoinModalDetails">
+                    <div class="CoinModalDetails__back"><img src="img/shop-coin/CoinModalDetails__back.png"></div>
+                    <div class="CoinModalDetails__image"><img src=""></div>
+                    <div class="CoinModalDetails__container">
+                        <div class="CoinModalDetails__gameTitle"></div>
+                        <div class="CoinModalDetails__title"></div>
+                        <div class="CoinModalDetails__CoinContainer">
+                            <div class="CoinModalDetails__CoinIcon"><img src="img/shop-coin/CoinModal__coinIcon.png"></div>
+                            <div class="CoinModalDetails__CoinCost">12</div>
+                        </div>
+                        <div class="CoinModalDetails__explanation"></div>
+                        <div class="CoinModalDetails__exchangeButton">
+                            <div class="CoinModalDetails__exchangeTitle">交換する</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ConfirmModal">
+        <div class="ConfirmModal__container">
+            <div class="ConfirmModal__heading">
+                <div class="ConfirmModal__headingTitle">確認</div>
+            </div>
+            <div class="ConfirmModal__body"></div>
+            <div class="ConfirmModal__button"><a class="ConfirmModal__deleteButton" href="#">交換</a><a class="ConfirmModal__cancelButton" href="#">キャンセル</a></div>
+        </div>
+    </div>
+
+    
+
+
+    <script>
+        window.nodeRequire = require;
+        delete window.require;
+        delete window.exports;
+        delete window.module;
+        const ipcRenderer = window.nodeRequire('electron').ipcRenderer;
+    </script>
+    
+    
+        <script src="cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" crossorigin="anonymous" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+<script>(window.jQuery||document.write("\u003Cscript src=\u0022lib/jquery/dist/jquery.min.js\u0022 crossorigin=\u0022anonymous\u0022 integrity=\u0022sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\u0022\u003E\u003C/script\u003E"));</script>
+    
+    <script src="lib/simplebar.min.js?v=-OHJQJsfP19MDmXf5SsDu9PaxZjOSjgahgRzSBec_5U"></script>
+    <script src="lib/TweenMax.min.js?v=AQZPawadwCNDliCmx87HOQvU2OV5CACZywp2lo9LwTE"></script>
+    <script src="js/fb/index.js?v=vsKVg6ADOA9ySK8N7HjMuJ1coq-v6Sy-K7XjVuE4Egc"></script>
+    <script src="js/post_message.js?v=lSwYpaF6tLeLnjkaTLM88JuYOI0EIL8A9pYPMV9--rY"></script>
+    <script src="js/base.js?v=g2WKkecIQH8UzohoPbk1bx0CEcwF--LBPw__aIFCtCY"></script>
+    <script src="js/request.js?v=Surzpm53FWlFX9M6tKYh-NMIINXQSMnIQVyXZLv7F_c"></script>
+    <script src="js/client_site.js?v=Be746uRmi9zGZUfDOpOF_wbaPRHiAUocYTpNslEX9-A"></script>
+    <script src="js/settings.js?v=gWEgtXoryqRzHyWhraajjcD4P52BA-7MKeKHv0vxM9A"></script>
+    <script>
+
+        const windowtype = "Main";
+        const IFRAME_ERROR_URL = "http://localhost:65002/Error/IframeError";
+        const DIALOGTYPE_ALERT = 1;
+        const DIALOGTYPE_CONFIRM = 0;
+
+        const DIALOGLEVEL_INFO = 0;
+        const DIALOGLEVEL_WARNING = 1;
+        const DIALOGLEVEL_ERROR = 2;
+
+        const NOTIFICATION_TYPE_LINK = 0;
+        const NOTIFICATION_TYPE_NEWS = 1;
+
+        const UNIQUE_CONFIG_UPDATE_TYPE = 5;
+
+        const PROFILE_UPDATE_TYPE = [
+                "name",
+                "avatar_id",
+                "comment",
+                "community_state_disclosure",
+                "disclosure_scope",
+                "unique_config",
+                "mailauth",
+        ];
+        const ACTION_CHANNEL_LIST = [
+                "NotInstalled",
+                "Standby",
+                "UpdateRequired",
+                "Updating",
+                "UpdateDownloading",
+                "Installing",
+                "InstallDownloading",
+                "PreparingUnInstall",
+                "UnInstalling",
+                "Playing",
+                "Relocating",
+                "Checking",
+                "Maintenance",
+        ];
+        const UPDATE_BADGE_LIST = [
+                "content",
+                "news",
+                "social",
+                "performance",
+        ];
+        const WINDOW_TYPE_LIST = [
+                "Main",
+                "Login",
+                "Sub",
+                "Logout",
+                "Toast",
+                "Install",
+                "Social",
+                "Dialog",
+                "Maintenance",
+                "Init",
+                "Update",
+                "LoginInner",
+                "ContentLogin",
+        ];
+        const COMMUNITY_STATE_DISP_LIST = [
+                "オフライン",
+                "オンライン",
+                "非表示",
+                "退席中",
+        ];
+        const DISCLOSURE_SCOPE_DISP_LIST = [
+                "全体に公開",
+                "フレンドのみ公開",
+                "公開しない",
+        ];
+
+        function changeContents(link) {
+            console.log("changeContents");
+            console.log(link);
+            //0401
+            TweenMax.set('.GameCover__container--sub--elm span', {opacity : 1});
+            TweenMax.fromTo('#child-frame', .2,
+                { x: 0 },
+                {
+                    x: 96,
+                    ease: "Power4.easeIn",
+                    onComplete: function(){
+                    setTimeout(function () {
+                        TweenMax.set('.Web',{
+                            x : -96
+                        });
+                    }, 200);
+                }
+            });
+            TweenMax.fromTo('.GameCover__container--sub--elm span', .4,
+            { x: '-100%' },
+            {
+                x : '0%',
+                ease: "Power4.easeIn",
+                onComplete: function(){
+                    var iframe = document.querySelector('.Web');
+                    iframe.src = '/cms/' + link;
+                    iframe.style.zIndex = "-1";
+                    iframe.style.zIndex = 1;
+                }
+            });
+        }
+        $(function () {
+            document.querySelector(".WindowControl__closeButton").addEventListener("click", function () {
+                windowActionClose(windowtype);
+            });
+            document.querySelector(".WindowControl__minimizeButton").addEventListener("click", function () {
+                windowActionMinimize(windowtype);
+            });
+            document.querySelector(".WindowControl__maxmizeButton").addEventListener("click", function () {
+                windowActionMaximize(windowtype);
+            });
+        });
+    </script>
+    
+    <script>
+        const HOST_URL = "http://localhost:65002";
+        const BUTTON_TEXT_INSTALL = "インストール";
+        const BUTTON_TEXT_PAUSE = "中止";
+        const BUTTON_TEXT_INTERRUPTION = "中断";
+        const BUTTON_TEXT_UPDATE = "アップデート";
+        const BUTTON_TEXT_PLAY = "ゲームスタート";
+        const BUTTON_TEXT_MAINTENANCE = "ゲームスタート";
+        const BUTTON_TEXT_CHANGING = "処理中";
+        const BUTTON_TEXT_CHANGE = "変更";
+        const BUTTON_TEXT_DELETE = "削除";
+        const PROGGRESS_CALCULATING = "計算中";
+        const PROGGRESS_TIME_UNIT = "分";
+        const PROGGRESS_DOWNLOAD_COMPLETED = "ファイル展開中";
+        const TAB_TYPE_GAME_ID = 0;
+        const TAB_TYPE_NEWS_ID = 1;
+        const CONTENT_TYPE_PC = 0;
+        const CONTENT_TYPE_BROWSER = 1;
+        const SEND_PAGE_SETTING = 1;
+        const PROFILE_NAME_MIN_NUM = 3;
+        const PROFILE_NAME_LIMIT_NUM = 16;
+        const PROFILE_COMMENT_LIMIT_NUM = 200;
+        const LOGIN_TYPE_V2 = 2;
+        const LOGIN_TYPE_V3 = 3;
+        const MSG_LIST = {
+            "e_error_code_AccountNameOverLimit": "名前は3文字以上16文字以内で入力してください",
+            "e_error_code_AccountCommentOverLimit": "入力制限を超えました",
+            "e_error_code_NewLineOverLimit": "改行を減らしてください",
+            "e_error_code_AccountNameUnusableCharacters": "名前は英数字、 -（ハイフン）_（アンダーバー）で入力してください",
+            "e_error_code_AccountNameFirstCharacters": "名前の先頭の文字は英字を使用してください"
+        };
+        var selected_cuid = "ELrmVeJRPRZMwrerwsJWkTxpKQABgNw3";
+        var priority_tab_type = -1;
+        var send_page = 0;
+        var priority_url = null;
+        var shortcut_start = false;
+        var startAnimeSkip = false;
+    </script>
+
+</body>
+</html>
+
+0
+

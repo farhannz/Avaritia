@@ -1,0 +1,13 @@
+.LauncherSplash {
+  height: 100%;
+  height: 100vh;
+  background-color: #202536;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.LauncherSplash__logo {
+  max-width: 170px; }
+
+.LauncherSplash__logo img {
+  width: 100%; }

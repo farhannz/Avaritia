@@ -1,0 +1,394 @@
+@charset "UTF-8";
+[data-simplebar] {
+  position: relative;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start; }
+
+.simplebar-wrapper {
+  overflow: hidden;
+  width: inherit;
+  height: inherit;
+  max-width: inherit;
+  max-height: inherit; }
+
+.simplebar-mask {
+  direction: inherit;
+  position: absolute;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: auto !important;
+  height: auto !important;
+  z-index: 0; }
+
+.simplebar-offset {
+  direction: inherit !important;
+  box-sizing: inherit !important;
+  resize: none !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 0;
+  margin: 0;
+  -webkit-overflow-scrolling: touch; }
+
+.simplebar-content-wrapper {
+  direction: inherit;
+  box-sizing: border-box !important;
+  position: relative;
+  display: block;
+  height: 100%;
+  /* Required for horizontal native scrollbar to not appear if parent is taller than natural height */
+  width: auto;
+  visibility: visible;
+  max-width: 100%;
+  /* Not required for horizontal scroll to trigger */
+  max-height: 100%;
+  /* Needed for vertical scroll to trigger */
+  scrollbar-width: none;
+  -ms-overflow-style: none; }
+  .simplebar-content-wrapper::-webkit-scrollbar {
+    width: 0;
+    height: 0; }
+
+.simplebar-hide-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0; }
+
+.simplebar-content:before, .simplebar-content:after {
+  content: ' ';
+  display: table; }
+
+.simplebar-placeholder {
+  max-height: 100%;
+  max-width: 100%;
+  width: 100%;
+  pointer-events: none; }
+
+.simplebar-height-auto-observer-wrapper {
+  box-sizing: inherit !important;
+  height: 100%;
+  width: 100%;
+  max-width: 1px;
+  position: relative;
+  float: left;
+  max-height: 1px;
+  overflow: hidden;
+  z-index: -1;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+  flex-grow: inherit;
+  flex-shrink: 0;
+  flex-basis: 0; }
+
+.simplebar-height-auto-observer {
+  box-sizing: inherit;
+  display: block;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1000%;
+  width: 1000%;
+  min-height: 1px;
+  min-width: 1px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1; }
+
+.simplebar-track {
+  z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden; }
+
+[data-simplebar].simplebar-dragging .simplebar-content {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none; }
+
+[data-simplebar].simplebar-dragging .simplebar-track {
+  pointer-events: all; }
+
+.simplebar-scrollbar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  min-height: 10px; }
+  .simplebar-scrollbar:before {
+    position: absolute;
+    content: '';
+    background: gray;
+    border-radius: 7px;
+    left: 2px;
+    right: 2px;
+    opacity: 0;
+    transition: opacity 0.2s linear; }
+  .simplebar-scrollbar.simplebar-visible:before {
+    /* When hovered, remove all transitions from drag handle */
+    opacity: 0.5;
+    transition: opacity 0s linear; }
+
+.simplebar-track.simplebar-vertical {
+  top: 0;
+  width: 11px; }
+  .simplebar-track.simplebar-vertical .simplebar-scrollbar:before {
+    top: 2px;
+    bottom: 2px; }
+
+.simplebar-track.simplebar-horizontal {
+  left: 0;
+  height: 11px; }
+  .simplebar-track.simplebar-horizontal .simplebar-scrollbar {
+    right: auto;
+    left: 0;
+    top: 2px;
+    height: 7px;
+    min-height: 0;
+    min-width: 10px;
+    width: auto; }
+    .simplebar-track.simplebar-horizontal .simplebar-scrollbar:before {
+      height: 100%;
+      left: 2px;
+      right: 2px; }
+
+/* Rtl support */
+[data-simplebar-direction='rtl'] .simplebar-track.simplebar-vertical {
+  right: auto;
+  left: 0; }
+
+.hs-dummy-scrollbar-size {
+  direction: rtl;
+  position: fixed;
+  opacity: 0;
+  visibility: hidden;
+  height: 500px;
+  width: 500px;
+  overflow-y: hidden;
+  overflow-x: scroll; }
+
+.simplebar-hide-scrollbar {
+  position: fixed;
+  left: 0;
+  visibility: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none; }
+
+/* Slider */
+.ChatImageSlider__slider .slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent; }
+
+.ChatImageSlider__slider .slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0; }
+  .ChatImageSlider__slider .slick-list:focus {
+    outline: none; }
+  .ChatImageSlider__slider .slick-list.dragging {
+    cursor: pointer;
+    cursor: hand; }
+
+.ChatImageSlider__slider .slick-slider .slick-track, .ChatImageSlider__slider .slick-slider .slick-list {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0); }
+
+.ChatImageSlider__slider .slick-track {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+  .ChatImageSlider__slider .slick-track:before {
+    display: table;
+    content: ''; }
+  .ChatImageSlider__slider .slick-track:after {
+    display: table;
+    content: '';
+    clear: both; }
+
+.ChatImageSlider__slider .slick-loading .slick-track {
+  visibility: hidden; }
+
+.ChatImageSlider__slider .slick-slide {
+  display: block;
+  float: left;
+  width: 85vw;
+  height: 80vh; }
+
+.ChatImageSlider__slider [dir='rtl'] .slick-slide {
+  float: right; }
+
+.ChatImageSlider__slider .slick-slide img {
+  display: block; }
+
+.ChatImageSlider__slider .slick-slide.slick-loading img {
+  display: none; }
+
+.ChatImageSlider__slider .slick-slide.dragging img {
+  pointer-events: none; }
+
+.ChatImageSlider__slider .slick-loading .slick-slide {
+  visibility: hidden; }
+
+.ChatImageSlider__slider .slick-vertical .slick-slide {
+  display: block;
+  height: auto;
+  border: 1px solid transparent; }
+
+.ChatImageSlider__slider .slick-arrow.slick-hidden {
+  display: none; }
+
+.ForumImage__container.slick-initialized .slick-slide {
+  display: block; }
+
+.ChatImageSlider__slider {
+  /* Slider */
+  /* Icons */
+  /* Arrows */
+  /* Dots */ }
+
+@font-face {
+  .ChatImageSlider__slider {
+    font-family: 'slick';
+    font-weight: normal;
+    font-style: normal; } }
+  .ChatImageSlider__slider .slick-prev, .ChatImageSlider__slider .slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 18px;
+    height: 34px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent; }
+  .ChatImageSlider__slider .slick-prev:hover, .ChatImageSlider__slider .slick-prev:focus {
+    color: transparent;
+    outline: none;
+    background: transparent; }
+  .ChatImageSlider__slider .slick-next:hover, .ChatImageSlider__slider .slick-next:focus {
+    color: transparent;
+    outline: none;
+    background: transparent; }
+  .ChatImageSlider__slider .slick-prev:hover:before, .ChatImageSlider__slider .slick-prev:focus:before {
+    opacity: 1; }
+  .ChatImageSlider__slider .slick-next:hover:before, .ChatImageSlider__slider .slick-next:focus:before {
+    opacity: 1; }
+  .ChatImageSlider__slider .slick-prev.slick-disabled:before, .ChatImageSlider__slider .slick-next.slick-disabled:before {
+    opacity: .25; }
+  .ChatImageSlider__slider .slick-prev:before, .ChatImageSlider__slider .slick-next:before {
+    font-family: 'slick';
+    font-size: 20px;
+    line-height: 1;
+    opacity: .75;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; }
+  .ChatImageSlider__slider .slick-prev {
+    left: -54px;
+    top: 50%;
+    transform: translateY(-50%); }
+  .ChatImageSlider__slider [dir='rtl'] .slick-prev {
+    right: -25px;
+    left: auto; }
+  .ChatImageSlider__slider .slick-prev:before, .ChatImageSlider__slider [dir='rtl'] .slick-prev:before {
+    content: '←'; }
+  .ChatImageSlider__slider .slick-next {
+    right: -54px;
+    top: 50%;
+    transform: translateY(-50%); }
+  .ChatImageSlider__slider [dir='rtl'] .slick-next {
+    right: auto;
+    left: -25px; }
+  .ChatImageSlider__slider .slick-next:before, .ChatImageSlider__slider [dir='rtl'] .slick-next:before {
+    content: '→'; }
+  .ChatImageSlider__slider .slick-dotted.slick-slider {
+    margin-bottom: 30px; }
+  .ChatImageSlider__slider .slick-dots {
+    position: absolute;
+    bottom: -25px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center; }
+    .ChatImageSlider__slider .slick-dots li {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin: 0 5px;
+      padding: 0;
+      cursor: pointer; }
+      .ChatImageSlider__slider .slick-dots li button {
+        font-size: 0;
+        line-height: 0;
+        display: block;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        cursor: pointer;
+        color: transparent;
+        border: 0;
+        outline: none;
+        background: transparent; }
+        .ChatImageSlider__slider .slick-dots li button:hover, .ChatImageSlider__slider .slick-dots li button:focus {
+          outline: none; }
+        .ChatImageSlider__slider .slick-dots li button:hover:before, .ChatImageSlider__slider .slick-dots li button:focus:before {
+          opacity: 1; }
+        .ChatImageSlider__slider .slick-dots li button:before {
+          font-family: 'slick';
+          font-size: 6px;
+          line-height: 20px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 20px;
+          height: 20px;
+          content: '●';
+          text-align: center;
+          opacity: .25;
+          color: black;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale; }
+      .ChatImageSlider__slider .slick-dots li.slick-active button:before {
+        opacity: 0.75;
+          opacity-color: black; }

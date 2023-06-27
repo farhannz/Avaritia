@@ -1,0 +1,898 @@
+﻿@charset "UTF-8";
+/* FadeInLeft */
+@-webkit-keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+/* FadeInDown */
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+/* FadeInUp*/
+@-webkit-keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+/* fadeInRight */
+@-webkit-keyframes fadeInRight {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); } }
+
+/* bounce */
+@-webkit-keyframes bounce {
+  from,
+  20%,
+  53%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0); }
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0); }
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0); } }
+
+@keyframes bounce {
+  from,
+  20%,
+  53%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); }
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0); }
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0); }
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0); } }
+
+@keyframes clockwise {
+  to {
+    transform: rotate(360deg) translatez(0); } }
+
+@keyframes fade {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@-webkit-keyframes slideOut {
+  100% {
+    top: 100%; } }
+
+@keyframes slideOut {
+  100% {
+    top: 100%; } }
+
+@-webkit-keyframes slide {
+  100% {
+    top: 0; } }
+
+@keyframes slide {
+  100% {
+    top: 0; } }
+
+.ModalInstallDirectoryConfirm {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 49px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2; }
+
+.LauncherInstall .ModalInstallDirectoryConfirm {
+  top: 0; }
+
+.ModalInstallDirectoryConfirm.fade {
+  opacity: 1;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -ms-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out; }
+
+.ModalInstallDirectoryConfirm__Container {
+  width: 480px;
+  min-height: 190px;
+  background-color: #d1d1d1;
+  border: 1px solid #d1d1d1;
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%); }
+
+.ModalInstallDirectoryConfirm__title {
+  text-align: center; }
+
+.ModalInstallDirectoryConfirm__titleText {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  display: inline-block;
+  margin-top: 30px;
+  line-height: 1; }
+  .ModalInstallDirectoryConfirm__titleText::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.65);
+    margin-top: 10px; }
+
+.ModalInstallDirectoryConfirm__explanation {
+  margin: 20px 25px 0;
+  color: #3b3b3b;
+  font-size: 16px;
+  line-height: 1.8; }
+
+.ModalInstallDirectoryConfirm__button {
+  margin-top: 45px;
+  display: flex;
+  justify-content: flex-end; }
+
+.ModalInstallDirectoryConfirm__buttonOk, .ModalInstallDirectoryConfirm__buttonCancel {
+  width: 136px;
+  height: 46px;
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: .1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold; }
+
+.ModalInstallDirectoryConfirm__buttonOk:hover, .ModalInstallDirectoryConfirm__buttonCancel:hover {
+  opacity: .85; }
+
+.ModalInstallDirectoryConfirm__buttonOk {
+  background-color: #ff6a37; }
+
+.ModalInstallDirectoryConfirm__buttonCancel {
+  background-color: #707070; }
+
+.ModalInstallDirectoryConfirm__directoryRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 42px; }
+  .ModalInstallDirectoryConfirm__directoryRow .DirectorySelector {
+    margin: 0;
+    border: 1px solid #c8c8c8; }
+    .ModalInstallDirectoryConfirm__directoryRow .DirectorySelector > input[type="text"] {
+      color: rgba(0, 0, 0, 0.5);
+      background: #ececec;
+      width: calc(100% - 71px); }
+    .ModalInstallDirectoryConfirm__directoryRow .DirectorySelector .DirectorySelector__button {
+      border-left: 1px solid #c8c8c8; }
+
+.ModalInstallDirectoryConfirm__directoryTitle {
+  font-size: 13px;
+  margin-right: 15px;
+  color: rgba(0, 0, 0, 0.5); }
+
+/* input type="text" */
+.DirectorySelector {
+  width: 300px;
+  height: 33px;
+  margin: 10px auto;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: space-between; }
+
+.DirectorySelector > input[type="text"] {
+  width: calc(100% - 71px);
+  background: #535660;
+  font-size: 13px;
+  color: white;
+  box-sizing: border-box;
+  padding-left: 10px; }
+
+.DirectorySelector > a {
+  background: #2f2f2f;
+  font-size: 13px;
+  color: white;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 0 22px; }
+
+.DirectorySelector__button:hover {
+  opacity: .85; }
+
+.RadioButton {
+  display: none; }
+
+.RadioButton + label {
+  padding-left: 30px;
+  position: relative;
+  margin-right: 50px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px; }
+
+.RadioButton + label:hover {
+  color: #fff;
+  cursor: pointer; }
+
+.RadioButton + label::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 2.5px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  transform: translateY(-50%); }
+
+.RadioButton + label:hover::before {
+  border: 1px solid #fff; }
+
+.RadioButton:checked + label {
+  color: white; }
+
+.RadioButton:checked + label::before {
+  border: 1px solid white; }
+
+.RadioButton:checked + label::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  transform: translateY(-50%); }
+
+/* selectbox */
+.SelectBox {
+  overflow: hidden;
+  width: 200px;
+  margin: 10px auto;
+  text-align: center;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  background: #414349; }
+
+.SelectBox__select {
+  width: 100%;
+  padding-right: 1em;
+  cursor: pointer;
+  text-indent: 0.01px;
+  text-overflow: ellipsis;
+  border: none;
+  outline: none;
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none; }
+
+.SelectBox__select::-ms-expand {
+  display: none; }
+
+.SelectBox::before {
+  position: absolute;
+  top: 50%;
+  right: 0.9em;
+  width: 0;
+  height: 0;
+  padding: 0;
+  content: '';
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #b5b5b5;
+  pointer-events: none;
+  transform: translateY(-50%); }
+
+.SelectBox:after {
+  position: absolute;
+  top: 0;
+  right: 2.5em;
+  bottom: 0;
+  width: 1px;
+  content: '';
+  border-left: 1px solid rgba(255, 255, 255, 0.5); }
+
+.SelectBox:after {
+  height: 80%;
+  margin: auto; }
+
+.SelectBox__select {
+  padding: 8px 38px 8px 8px;
+  color: #b5b5b5; }
+
+/* ToggleCheckBox */
+.ToggleCheckBox {
+  margin: 10px auto; }
+
+.ToggleCheckBox__label {
+  width: 37px;
+  position: relative;
+  display: inline-block;
+  padding-top: 3px; }
+
+.ToggleCheckBox__bar {
+  display: block;
+    display-cursor: pointer;
+    display-position: relative;
+  transition: all .1s .3s;
+  overflow: hidden; }
+
+.ToggleCheckBox__bar {
+  width: 35px;
+  height: 14px;
+  background: #8c8f98;
+  border-radius: 7px; }
+
+.ToggleCheckBox__checkbox {
+  display: none; }
+
+.ToggleCheckBox__circle {
+  display: block;
+  top: -5px;
+  left: -10px;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background: lightgrey;
+  transition: all .3s; }
+
+.ToggleCheckBox__checkbox:checked ~ .ToggleCheckBox__circle {
+  left: 15px;
+  background-color: #f5a42d; }
+
+.ToggleCheckBox__checkbox:checked ~ .ToggleCheckBox__bar {
+  border-color: #fff;
+  transition: all 0s; }
+
+.LauncherInstall {
+  background-color: #202536;
+  display: flex;
+  justify-content: space-between;
+  /*sideSpace*/ }
+
+.LauncherInstall__sideSpace {
+  width: 187px;
+  position: relative; }
+
+.LauncherInstall__sideSpaceLogo {
+  width: 110px;
+  margin: 70px auto; }
+
+.LauncherInstall__sideSpaceLogo--svg {
+  width: 68px;
+  margin: 0 auto; }
+
+.LauncherInstall__sideSpaceLogo--link {
+  margin-top: 8px; }
+
+.LauncherInstall__sideSpaceLogo--link img {
+  width: 100%; }
+
+.LauncherInstall__sideSpaceLanguage {
+  position: absolute;
+  left: 10px;
+  bottom: 0; }
+
+.LauncherInstall__sideSpaceLanguage .SelectBox {
+  width: 165px; }
+
+@keyframes load {
+  0% {
+    opacity: 0;
+    transform: scale(0); }
+  100% {
+    opacity: 1;
+    transform: scale(1); } }
+
+@keyframes loadingAnime {
+  0% {
+    transform: translate3d(-150px, 0, 0); }
+  100% {
+    transform: translate3d(0, 0, 0); } }
+
+/* 上書き
+ *=================================================================== */
+.LauncherInstall {
+  position: relative;
+  overflow: hidden; }
+
+.LauncherInstall__sideSpaceLogo {
+  width: 190px;
+  margin: 50px auto; }
+
+.LauncherInstall__sideSpace {
+  width: 253px;
+  overflow: hidden; }
+
+.LauncherInstall__sideSpaceLogo--svg {
+  width: inherit; }
+
+.LauncherInstallMain {
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  -ms-transition-duration: 0.2s;
+  -ms-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  　-moz-transition-duration: 0.2s;
+  -moz-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  overflow: hidden; }
+
+.installing .LauncherInstallMain {
+  opacity: 0;
+  visibility: hidden; }
+
+.LauncherInstalling__mainTitle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  -ms-transition-duration: 0.2s;
+  -ms-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  　-moz-transition-duration: 0.2s;
+  -moz-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1); }
+
+.installing .LauncherInstalling__mainTitle {
+  opacity: 1;
+  visibility: inherit; }
+
+.LauncherInstallMain__button, .LauncherInstall__sideSpaceLanguage {
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  -ms-transition-duration: 0.2s;
+  -ms-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  　-moz-transition-duration: 0.2s;
+  -moz-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1); }
+
+.installing .LauncherInstallMain__button, .installing .LauncherInstall__sideSpaceLanguage {
+  transform: translate3d(0, 50px, 0); }
+
+.install--bar {
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  -ms-transition-duration: 0.2s;
+  -ms-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  -webkit-transition-duration: 0.2s;
+  -webkit-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  　-moz-transition-duration: 0.2s;
+  -moz-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  left: 0;
+  bottom: 0;
+  background: #ccc;
+  transform: translate3d(0, 20px, 0);
+  transition-delay: .2s; }
+
+.installing .install--bar {
+  transform: translate3d(0, 0, 0); }
+
+.install--bar span {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  width: 200%;
+  background: url(../img/launcher-install/loading--bg.png) repeat-x;
+  background-size: 150px auto;
+  animation: loadingAnime 2s linear infinite; }
+
+/*main*/
+.LauncherInstallMain {
+  -webkit-flex: 1;
+  flex: 1; }
+
+/*Close　mark*/
+.LauncherInstallMain__Close {
+  max-width: 100%;
+  position: relative; }
+
+.LauncherInstallMain__Close img {
+  position: absolute;
+  right: 0px;
+  width: 15px;
+  height: 15px;
+  padding-top: 10px;
+  margin-right: 10px;
+  /*Heading*/ }
+
+.LauncherInstallMain__heading {
+  margin-top: 46px;
+  color: #f0f1f2;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: .1em; }
+
+.LauncherInstallMain__container {
+  max-width: 545px;
+  padding-right: 60px;
+  padding-bottom: 15px; }
+
+.LauncherInstallMain__explanation {
+  margin-top: 1em;
+  color: #bec0c4;
+  font-size: 13px;
+  line-height: 1.9; }
+
+/*Language*/
+.LauncherInstallMain__languageTitle {
+  margin-top: 2em;
+  color: #f0f1f2;
+  font-size: 15px;
+  font-weight: bold; }
+
+.LauncherInstallMain__languageExplanation {
+  margin-top: 1em;
+  color: #bec0c4;
+  font-size: 13px; }
+
+.LauncherInstallMain__languageChoose {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-start; }
+
+.LauncherInstallMain__languageChoose--ja, .LauncherInstallMain__languageChoose--en {
+  margin-right: 53px;
+  color: #f0f1f2;
+  font-size: 16px; }
+
+/*Folder*/
+.LauncherInstallMain__folder {
+  margin-top: 40px; }
+
+.LauncherInstallMain__folderTitle {
+  color: #f0f1f2;
+  font-size: 15px;
+  font-weight: bold; }
+
+.LauncherInstallMain__folderExplanation {
+  margin-top: 1em;
+  color: #bec0c4;
+  font-size: 13px;
+  line-height: 2; }
+
+.LauncherInstallMain__folderInput {
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; }
+
+.LauncherInstallMain__folderInput--title {
+  font-size: 13px;
+  color: #bec0c4; }
+
+/*Folder input*/
+.LauncherInstallMain__folderInputLine {
+  height: 33px;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1em; }
+
+input[type="text"].LauncherInstallMain__folderInput--input {
+  width: 350px;
+  background: #464646;
+  font-size: 13px;
+  color: white;
+  box-sizing: border-box;
+  padding-left: 30px; }
+
+.LauncherInstallMain__folderInput--button {
+  background: #2f2f2f;
+  font-size: 13px;
+  color: white;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid #fff;
+  padding: 0 22px; }
+
+.LauncherInstallMain__descs {
+  margin-top: 30px;
+  display: flex;
+  justify-content: left; }
+
+.LauncherInstallMain__desc {
+  margin-right: 3em;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; }
+
+.LauncherInstallMain__descTitle {
+  margin-right: 10px;
+  color: #bec0c4;
+  font-size: 13px; }
+
+.LauncherInstallMain__descVolume {
+  color: #f0f1f2;
+  font-size: 13px;
+  font-weight: bold; }
+
+/*checkbox*/
+.LauncherInstallMain__checks {
+  margin-top: 25px;
+  margin-bottom: 30px; }
+
+.LauncherInstallMain__check {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px; }
+
+/*Button*/
+.LauncherInstallMain__button {
+  width: 100%;
+  min-height: 50px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer; }
+
+.LauncherInstallMain__buttonInstall, .LauncherInstallMain__buttonCancel {
+  width: 50%;
+  color: #fff;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.LauncherInstallMain__buttonInstall {
+  background-color: #ff6a37;
+  position: relative; }
+
+.LauncherInstallMain__buttonCancel {
+  background-color: #707070; }
+
+.LauncherInstallMain__buttonInstall span {
+  font-size: 13px; }
+
+.LauncherInstallMain__buttonInstall img {
+  width: 22px;
+  position: absolute;
+  right: 16px;
+  top: 17px; }
+
+/* checkbox */
+.LauncherInstallMain__check--input {
+  display: none; }
+
+.LauncherInstallMain__check--title:hover {
+  color: #fff; }
+  .LauncherInstallMain__check--title:hover::before {
+    border-color: #fff; }
+
+.LauncherInstallMain__check--title {
+  padding-left: 30px;
+  position: relative;
+  margin-right: 20px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px; }
+  .LauncherInstallMain__check--title::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.7); }
+
+.LauncherInstallMain__check--input:checked + .LauncherInstallMain__check--title {
+  color: white; }
+  .LauncherInstallMain__check--input:checked + .LauncherInstallMain__check--title::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 4px;
+    height: 10px;
+    transform: rotate(40deg);
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff; }
+
+.LauncherInstallMain__check--input:checked + .LauncherInstallMain__check--title::before {
+  border: 1px solid white; }
+
+.LauncherInstallMain__progresBar {
+  height: 10px;
+  background: linear-gradient(-45deg, #ea5514 25%, #fff 25%, #fff 50%, #ea5514 50%, #ea5514 75%, #fff 75%, #fff);
+  -webkit-animation: stripeBg 20s linear infinite;
+  background-size: 20px 20px;
+  border: 1px solid #ea5514; }
+
+@-webkit-keyframes stripeBg {
+  0% {
+    background-position: 0 0; }
+  100% {
+    background-position: 100% 0; } }
+
+.LauncherInstalling {
+  height: 100vh;
+  background-color: #202536;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; }
+
+.LauncherInstalling__header {
+  width: 100%;
+  height: 39px;
+  padding: 0 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
+.LauncherInstalling__headerTitle {
+  color: #fff;
+  font-size: 14px; }
+
+.LauncherInstalling__headerClose {
+  width: 15px; }
+
+.LauncherInstalling__headerClose img {
+  width: 100%; }
+
+.LauncherInstalling__sideSpace {
+  width: 215px;
+  height: calc(100% - 99px);
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.LauncherInstalling__sideLogo {
+  width: 150px; }
+
+.LauncherInstalling__sideLogo img {
+  width: 100%; }
+
+.LauncherInstalling__main {
+  width: calc(100% - 215px);
+  height: calc(100% - 99px);
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.LauncherInstalling__mainTitle--install {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.2;
+  letter-spacing: .08em; }
+
+.LauncherInstalling__mainTitle--explanation {
+  margin-top: 17px;
+  color: #fff;
+  font-size: 13px;
+  line-height: 2.2; }
+
+.LauncherInstalling__bottom {
+  width: 100%;
+  height: 60px;
+  background-color: #3b404d;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.LauncherInstalling__bottomBar {
+  width: 678px;
+  height: 10px;
+  background-color: #757983;
+  border-radius: 5px; }
+
+.LauncherInstalling__bottomBar--gauge {
+  height: 8px;
+  width: 100%;
+  background: linear-gradient(-45deg, #ea5514 25%, #fff 25%, #fff 50%, #ea5514 50%, #ea5514 75%, #fff 75%, #fff);
+  -webkit-animation: stripeBg 30s linear infinite;
+  background-size: 20px 20px;
+  border: 1px solid #ea5514;
+  border-radius: 5px; }
