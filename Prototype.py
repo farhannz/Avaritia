@@ -81,6 +81,37 @@ random.seed(time.time()/1e3)
 #     this.message.Headers.Add("Cookie", str + "ocean_hash=" + BitConverter.ToString(hash).ToLower().Replace("-", "") + ";");
 #     }
 # }
+
+# signup
+# https://account-api.bandainamcoid.com/v3/signup/end
+
+# AUTH API
+# POST https://account-api.bandainamcoid.com/v3/authcode/input
+# Payload
+# {
+#     "client_id" : "idportal",
+#     "backto"    : "",
+#     "customize_id" : "",
+#     "authcode" : "",
+#     "authcode_key" : "",
+#     "language" : "en",
+#     "permit_token" : "",
+#     "cookie" : "",
+# }
+
+# Agree login bp
+# POST https://account-api.bandainamcoid.com/v3/login/aggree
+# Payload 
+# {
+#     "client_id" : "bno_ocean",
+#     "redirect_uri"    : "https://api-bnolauncher.bandainamco-ol.jp/api/login/bana/result/gPm3gWekj8UkJKkWFOpx",
+#     "customize_id" : "launcher",
+#     "language" : "en",
+#     "cookie" : "",
+# }
+
+
+
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) bandai_namco_launcher/2.0.24 Chrome/78.0.3904.113 Electron/7.1.2 Safari/537.36"
 API_LAUNCHER = "https://api-bnolauncher.bandainamco-ol.jp"
 API_ACCOUNT = "https://account-api.bandainamcoid.com"

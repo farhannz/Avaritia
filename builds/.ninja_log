@@ -1,0 +1,22 @@
+# ninja log v5
+6	13	0	clean	b3d93270702a42f4
+19	2281	7097629606644109	_deps/spdlog-build/CMakeFiles/spdlog.dir/src/color_sinks.cpp.obj	f351f383b29f5f42
+32	3635	7097629620174092	_deps/spdlog-build/CMakeFiles/spdlog.dir/src/bundled_fmtlib_format.cpp.obj	1bd1d20941acfeeb
+2953	3281	7097661586307778	bin/maingui.exe	dede8e3a54e45150
+27	4990	7097601246298386	src/gui/CMakeFiles/maingui.dir/__/__/submodules/imgui/imgui_widgets.cpp.obj	dfbf85c2713054e
+28	1013	7097629593944114	_deps/spdlog-build/CMakeFiles/spdlog.dir/src/cfg.cpp.obj	d2bc3fee0a1ee348
+22	1337	7097629597194110	_deps/spdlog-build/CMakeFiles/spdlog.dir/src/file_sinks.cpp.obj	5c900b8d11f9cce6
+11	1566	7097601212048392	src/gui/CMakeFiles/maingui.dir/__/__/submodules/imgui/backends/imgui_impl_glfw.cpp.obj	871e3c5bd92d2769
+24	2522	7097601221618395	src/gui/CMakeFiles/maingui.dir/__/__/submodules/imgui/imgui_tables.cpp.obj	e6f97d7360044089
+12	12295	7097641636193269	src/CMakeFiles/main.dir/main.cpp.obj	a7822ef95df082b3
+12	194	7097661555507782	src/gui/CMakeFiles/maingui.dir/__/__/submodules/imgui/imgui_spectrum.cpp.obj	7f56c93927e0fab1
+21	4139	7097601237788418	src/gui/CMakeFiles/maingui.dir/__/__/submodules/imgui/imgui_draw.cpp.obj	3b443edf70285975
+15	2953	7097661583087802	src/gui/CMakeFiles/maingui.dir/main_gui.cpp.obj	23737bccff28a440
+17	2172	7097629605544124	_deps/spdlog-build/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.obj	4a11110079913630
+12295	12715	7097641640363215	bin/main.exe	dff950299ee6a7b3
+14	1054	7097601206938396	src/gui/CMakeFiles/maingui.dir/__/__/submodules/imgui/backends/imgui_impl_opengl3.cpp.obj	fc229670636d2f8b
+15	7760	7097629661414449	_deps/spdlog-build/CMakeFiles/spdlog.dir/src/spdlog.cpp.obj	161ce73b69205065
+17	199	7097630262867400	lib/libspdlog.a	88dbc94a51d095e3
+19	2981	7097601226218428	src/gui/CMakeFiles/maingui.dir/__/__/submodules/imgui/imgui_demo.cpp.obj	7b312f55e3c75bc8
+25	1442	7097629598254135	_deps/spdlog-build/CMakeFiles/spdlog.dir/src/async.cpp.obj	38918e0daf95acf7
+16	9621	7097601292598821	src/gui/CMakeFiles/maingui.dir/__/__/submodules/imgui/imgui.cpp.obj	6aebe3b5ec1f1e33

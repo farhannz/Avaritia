@@ -6,6 +6,8 @@
 #include <sstream>
 #include <iostream>
 #include <iomanip>
+
+
 namespace avaritia
 {
     class DeviceID{

@@ -1,0 +1,137 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"G:/FNZ/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/13.1.0/include",
+						"G:/FNZ/msys64/ucrt64/include",
+						"G:/FNZ/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"
+					],
+					"linkDirectories" : 
+					[
+						"G:/FNZ/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/13.1.0",
+						"G:/FNZ/msys64/ucrt64/lib/gcc",
+						"G:/FNZ/msys64/ucrt64/x86_64-w64-mingw32/lib",
+						"G:/FNZ/msys64/ucrt64/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"mingw32",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"kernel32",
+						"pthread",
+						"advapi32",
+						"shell32",
+						"user32",
+						"kernel32",
+						"mingw32",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"kernel32"
+					]
+				},
+				"path" : "G:/FNZ/msys64/ucrt64/bin/gcc.exe",
+				"version" : "13.1.0"
+			},
+			"language" : "C",
+			"sourceFileExtensions" : 
+			[
+				"c",
+				"m"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"G:/FNZ/msys64/ucrt64/include/c++/13.1.0",
+						"G:/FNZ/msys64/ucrt64/include/c++/13.1.0/x86_64-w64-mingw32",
+						"G:/FNZ/msys64/ucrt64/include/c++/13.1.0/backward",
+						"G:/FNZ/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/13.1.0/include",
+						"G:/FNZ/msys64/ucrt64/include",
+						"G:/FNZ/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"
+					],
+					"linkDirectories" : 
+					[
+						"G:/FNZ/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/13.1.0",
+						"G:/FNZ/msys64/ucrt64/lib/gcc",
+						"G:/FNZ/msys64/ucrt64/x86_64-w64-mingw32/lib",
+						"G:/FNZ/msys64/ucrt64/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"mingw32",
+						"gcc_s",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"kernel32",
+						"pthread",
+						"advapi32",
+						"shell32",
+						"user32",
+						"kernel32",
+						"mingw32",
+						"gcc_s",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"kernel32"
+					]
+				},
+				"path" : "G:/FNZ/msys64/ucrt64/bin/g++.exe",
+				"version" : "13.1.0"
+			},
+			"language" : "CXX",
+			"sourceFileExtensions" : 
+			[
+				"C",
+				"M",
+				"c++",
+				"cc",
+				"cpp",
+				"cxx",
+				"mm",
+				"mpp",
+				"CPP",
+				"ixx",
+				"cppm"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"implicit" : {},
+				"path" : "G:/FNZ/msys64/ucrt64/bin/windres.exe"
+			},
+			"language" : "RC",
+			"sourceFileExtensions" : 
+			[
+				"rc",
+				"RC"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}

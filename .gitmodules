@@ -1,0 +1,11 @@
+[submodule "submodules/stb"]
+	path = submodules/stb
+	url = https://github.com/nothings/stb
+
+[submodule "submodules/imgui"]
+	path = submodules/imgui
+	url = https://github.com/ocornut/imgui/
+	branch = docking
+[submodule "submodules/ImGui-Addons"]
+	path = submodules/ImGui-Addons
+	url = https://github.com/gallickgunner/ImGui-Addons.git

@@ -3,7 +3,11 @@
 
 namespace avaritia{
     namespace request{
-        
+        void POST();
+        void GET();
+        void PUT();
+        void UPDATE();
+        void PATCH();
     };
 };
 
