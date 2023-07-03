@@ -5,8 +5,4 @@
    
 
 ### Disclaimer   
-This is a learning project of the author of this repository.
-
-
-
-BLUE PROTOCOL is a registered trademark of BANDAI NAMCO Online Inc. ©2019 Bandai Namco Online Inc. ©2019 Bandai Namco Studios Inc. All Rights Reserved. We are not affiliated with BANDAI NAMCO Online Inc. or  Bandai Namco Studios Inc. in any way.
+This is a learning project of the author of this repository and a community fan project that has nothing to do with the creators of the game. This launcher does not modify any files from the game client. Using this launcher may violate the TOS of the game.

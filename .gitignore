@@ -17,3 +17,5 @@ CTestTestfile.cmake
 _deps
 /wwwroot
 /build
+/builds
+*.dll
