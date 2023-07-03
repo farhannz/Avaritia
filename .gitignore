@@ -18,4 +18,8 @@ _deps
 /wwwroot
 /build
 /builds
+/build/*
+/builds/*
 *.dll
+/wwwroot
+*.py
