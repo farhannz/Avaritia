@@ -1,9 +1,12 @@
-
+#define CPPHTTPLIB_OPENSSL_SUPPORT
 // #include <winbase.h>
+// #include <httplib.h>
+#include <cpr/cpr.h>
+#include <vector>
 #include <gui/BaseApp.hpp>
 #include <GlobalSetting.hpp>
 
-void StartService(LPSTR lpApplicationName, bool &started, STARTUPINFO &si, PROCESS_INFORMATION &pi, std::vector<std::string> all_args){
+void startApplication(LPSTR lpApplicationName, bool &started, STARTUPINFO &si, PROCESS_INFORMATION &pi, std::vector<std::string> all_args){
     if(started) return;
 
     started = true;
@@ -51,7 +54,7 @@ int main(int, char**)
     bool login_popup_window = false;
     bool setting_window = false;
     static std::string gamepath;
-    static std::string _email, _pw;
+    std::string m_email, m_pw;
     imgui_addons::ImGuiFileBrowser file_dialog;
     bool settingWarning=false;
     bool service_started = false; // Service flag
@@ -62,10 +65,38 @@ int main(int, char**)
     avaritia::setting::GlobalSetting config;
     bool isConfigExist = config.isConfigFileExist();
     bool isAutoLogin = config.isAutoLogin();
+    bool saveAccount = false;
+    // bool secondWindow = true;
+    std::vector<avaritia::setting::AccountInfo> accountList{{"example@example.com","encryptedpw"},{"alt@alt.com","encrypted"}};
+    bool accountSelected[accountList.size()] = {0};
+    std::pair<avaritia::setting::AccountInfo, bool> defaultAccount{accountList[0],true};
+    // bool isAccountSaved = false;
     if(!isConfigExist || (isConfigExist && config.getGuId().empty())) config.setGuId(avaritia::setting::DeviceID().ToString());
     if(isConfigExist) {
         config.loadConfig();
     }
+    std::string location = "placeholder";
+    std::string url = "http://ip-api.com";
+    // httplib::Client ipApi(url);
+    // auto res = ipApi.Get("/");
+    cpr::Response ipApiResposne = cpr::Get(cpr::Url("http://ip-api.com/json"));
+    auto ipApiResponseJson = nlohmann::json::parse(ipApiResposne.text);
+    location = ipApiResponseJson["country"];
+    float baseFontSize = 18.0f; 
+    float iconFontSize = baseFontSize * 2.0f / 3.0f;
+    ImFontConfig icons_config; 
+    icons_config.MergeMode = true; 
+    icons_config.PixelSnapH = true; 
+    icons_config.GlyphMinAdvanceX = iconFontSize;
+    // io.Fonts->AddFontDefault();
+    static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_16_FA, 0 };
+    // const char* fontPath = "resources/font";
+    ImGuiIO io = ImGui::GetIO();
+    io.Fonts->AddFontFromFileTTF( "resources/font/" FONT_ICON_FILE_NAME_FAS, iconFontSize, &icons_config, icons_ranges );
+    io.Fonts->AddFontFromFileTTF( "resources/font/fa-v4compatibility.ttf", iconFontSize, &icons_config, icons_ranges );
+    io.Fonts->AddFontFromFileTTF( "resources/font/" FONT_ICON_FILE_NAME_FAB, iconFontSize, &icons_config, icons_ranges );
+    assert(iconFont != nullptr);
+    io.Fonts->Build();
     // Main loop
 #ifdef __EMSCRIPTEN__
     // For an Emscripten build we are disabling file-system access, so let's not attempt to do a fopen() of the imgui.ini file.
@@ -87,8 +118,8 @@ int main(int, char**)
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-        ImGuiIO io = ImGui::GetIO();
         {
+            ImGui::NextColumn();
             if(login_popup_window) ImGui::BeginDisabled();
             // static float f = 0.0f;
             ImGuiIO io = ImGui::GetIO();
@@ -96,38 +127,95 @@ int main(int, char**)
             ImGui::SetNextWindowSize(ImGui::GetMainViewport()->Size,ImGuiCond_Always);
             ImGui::Begin("##begin",nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoDocking);                          // Create a window called "Hello, world!" and append into it.
 
-            // ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            
-            static char email[64];
-            static char password[32];
-            
-            ImGui::Text("Email:");
-            bool isEmailEnter = ImGui::InputText("##email", email,IM_ARRAYSIZE(email),ImGuiInputTextFlags_None | ImGuiInputTextFlags_EnterReturnsTrue);
-            ImGui::Text("Password:");
-            bool isPasswordEnter = ImGui::InputText("##password", password,IM_ARRAYSIZE(password),ImGuiInputTextFlags_Password | ImGuiInputTextFlags_EnterReturnsTrue);
-            if( ImGui::Button("Login") || isEmailEnter || isPasswordEnter){
-                for(int i = 0;i<64;++i){
-                    email[i] = tolower(email[i]);
-                }
-                std::regex emailValidator("^[-!#$%&'*+/0-9=?A-Z^_a-z{|}~](\\.?[-!#$%&'*+/0-9=?A-Z^_a-z{|}~])*@[a-zA-Z](-?[a-zA-Z0-9])*(\\.[a-zA-Z](-?[a-zA-Z0-9])*)+$");
-                if(std::regex_match(email, emailValidator) && !std::string_view(password).empty()){
-                    _email = email;
-                    _pw = password;
-                    login_popup_window = true;
-                }
-            }
-            ImGui::SameLine();
-            if(ImGui::Button("Setting")) setting_window=true;
-            ImGui::SameLine();
-            ImGui::SameLine();
-            ImGui::SameLine();
-            ImGui::Checkbox("Save Account", &isAutoLogin); 
-            config.setAutoLogin(isAutoLogin);
 
+
+            // Child 1: no border, enable horizontal scrollbar
+            {
+                ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
+                ImGui::BeginChild("ChildL", ImVec2(ImGui::GetContentRegionAvail().x * 0.5f, 260), false, window_flags);
+                ImGui::Spacing();
+                ImGui::Spacing();
+                ImGui::Indent(ImGui::GetContentRegionAvail().x * .15f);
+                ImGui::Text(ICON_FA_ENVELOPE " Email:");
+                bool isEmailEnter = ImGui::InputText("##email", &m_email, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EnterReturnsTrue);
+                ImGui::Text(ICON_FA_KEY " Password:");
+                bool isPasswordEnter = ImGui::InputText("##password", &m_pw,ImGuiInputTextFlags_Password | ImGuiInputTextFlags_EnterReturnsTrue);
+                if( ImGui::Button(ICON_FA_SIGN_IN " Login") || isEmailEnter || isPasswordEnter){
+                    for(int i = 0;i<(int)m_email.size();++i){
+                        m_email[i] = tolower(m_email[i]);
+                    }
+                    std::regex emailValidator("^[-!#$%&'*+/0-9=?A-Z^_a-z{|}~](\\.?[-!#$%&'*+/0-9=?A-Z^_a-z{|}~])*@[a-zA-Z](-?[a-zA-Z0-9])*(\\.[a-zA-Z](-?[a-zA-Z0-9])*)+$");
+                    if(std::regex_match(m_email, emailValidator) && !std::string_view(m_pw).empty()){
+                        // m_email = email;
+                        // m_pw = password;
+                        if(saveAccount){
+                            accountList.push_back({m_email,"encrypted"});
+                        }
+                        // login_popup_window = true;
+                    }
+                }
+                // Right Col
+                // ImGui::SameLine();
+                ImGui::SameLine();
+                if(ImGui::Button(ICON_FA_GEAR " Setting")) setting_window=true;
+                
+                ImGui::SameLine();
+                ImGui::SameLine();
+                ImGui::SameLine();
+                ImGui::Checkbox("Auto Login", &isAutoLogin); 
+                config.setAutoLogin(isAutoLogin);
+                // ImGui::Text("%s",ipApiResponseJson.dump(4).c_str());
+                // for(int i = 0;i<16;++i){
+                //     ImGui::Spacing();
+                // }
+                // ImGui::Text("Your Location : Japan");
+                ImGui::Text("Your Location %s : %s",ICON_FA_MAP_LOCATION, location.c_str());
+                ImGui::EndChild();
+            }
+
+            ImGui::SameLine();
+            // Child 2: rounded border
+            {
+                ImGuiWindowFlags window_flags = ImGuiWindowFlags_None;
+                ImGui::BeginChild("ChildR", ImVec2(0, 260), true, window_flags);
+                static float lWidth, rWidth;
+                ImGui::Text("Account switcher: "); ImGui::SameLine(); HelpMarker("Double click on the selected account to login directly"); 
+                if (ImGui::BeginTable("accountId", 2, ImGuiTableFlags_BordersInnerH | ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_BordersOuterH | ImGuiTableFlags_BordersOuterV, { 0, 0 }))
+                {
+                    ImGui::TableSetupColumn("Account");
+                    ImGui::TableSetupColumn("Default",ImGuiTableColumnFlags_WidthStretch,0.25f);
+                    ImGui::TableHeadersRow();
+                    static int selected = -1;
+                    for (int i = 0; i<(int)accountList.size();++i )
+                    {
+                        ImGui::TableNextColumn();
+                        lWidth = ImGui::GetColumnWidth();   
+                        if(ImGui::Selectable(accountList[i].email.c_str(),selected == i,ImGuiSelectableFlags_AllowDoubleClick)) selected = i;
+                        ImGui::TableNextColumn();
+                        bool defaultSelected = (accountList[i].email == defaultAccount.first.email) ? defaultAccount.second : false;
+                        rWidth = ImGui::GetColumnWidth();   
+                        ImGui::Indent(rWidth * 0.25f);
+                        ImGui::Checkbox("##default",&defaultSelected);
+                        ImGui::Indent(-rWidth * 0.25f);
+                    }
+                    ImGui::EndTable();
+                }
+                // ImGui::Indent(-(rWidth * 0.25f * accountList.size()));
+                ImGui::Button(ICON_FA_PLUS" Add Account");
+                ImGui::SameLine();
+                ImGui::Checkbox("Save Account",&saveAccount);
+                ImGui::SameLine();
+                HelpMarker("When you login, your current account will be saved into the account list.");
+                ImGui::EndChild();
+                ImGui::PopStyleVar();
+            }
             ImGui::End();
             ImGui::EndDisabled();
         }
 
+
+
+        // PopUP Region
         if (login_popup_window){
             ImVec2 sz = ImGui::GetMainViewport()->Size;
             ImVec2 pos = ImGui::GetMainViewport()->Pos;
@@ -140,7 +228,7 @@ int main(int, char**)
             
 
             if(!service_started){
-                StartService(const_cast<char *>(std::string("main.exe").c_str()), service_started,si,pi,std::vector<std::string>{_email,_pw});
+                startApplication(const_cast<char *>(std::string("main.exe").c_str()), service_started,si,pi,std::vector<std::string>{m_email,m_pw});
                 config.saveConfigToFile();
             }
             if (ImGui::Button("Close Me")){
@@ -155,7 +243,7 @@ int main(int, char**)
             ImGui::SetNextWindowSize(ImGui::GetMainViewport()->Size,ImGuiCond_Always);
             ImGui::Begin("Setting window",&setting_window, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking);
             ImGui::Text("Game path :"); ImGui::SameLine();
-            ImGui::InputText("##gamepath", const_cast<char*>(gamepath.c_str()),IM_ARRAYSIZE(gamepath.c_str()),ImGuiInputTextFlags_None,nullptr); ImGui::SameLine();
+            ImGui::InputText("##gamepath", &gamepath, ImGuiInputTextFlags_None,nullptr); ImGui::SameLine();
             if(ImGui::Button("Browse##gamepath")){
                 browse = true;
             }
@@ -163,7 +251,7 @@ int main(int, char**)
                 ImGui::OpenPopup("Browse");
             }
             file_dialog.showFileDialog("Browse", imgui_addons::ImGuiFileBrowser::DialogMode::SELECT,ImVec2(400,400));
-            gamepath = file_dialog.selected_path.c_str();
+            gamepath = file_dialog.selected_path;
             
             if(ImGui::Button("Save")){
                 if(!gamepath.empty()){
@@ -192,6 +280,8 @@ int main(int, char**)
                 break;
             }
         }
+        ImGui::Text("%f %f", ImGui::GetColumnOffset(0), ImGui::GetColumnOffset(1));
+
         // Rendering
         ImGui::Render();
         int display_w, display_h;
@@ -210,8 +300,7 @@ int main(int, char**)
             ImGui::UpdatePlatformWindows();
             ImGui::RenderPlatformWindowsDefault();
             glfwMakeContextCurrent(backup_current_context);
-        }
-        
+        } 
         glfwSwapBuffers(app.getWindow());
     }
 

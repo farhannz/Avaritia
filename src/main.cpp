@@ -13,6 +13,14 @@
 #include <spdlog/spdlog.h>
 #define endl '\n'
 
+
+// POST https://api-bnolauncher.bandainamco-ol.jp/api/login/authcode/check
+// Use ocean_session and ocean_hash
+// {"acc_id":"Vp4DYRxRnNf7RWNVfOPX","auth_code":"059348","device_id":"b6bef253cc564fe8abb991e02ee7732b"}
+// Response
+// {"failed_count":0,"error_code":0}
+
+
 std::string getOceanHash(std::string ocean_session, nlohmann::json data){
     uint32_t seed = 2929;
 
@@ -199,6 +207,7 @@ int main(int argc, char const *argv[])
         std::vector<std::string> all_args;
         all_args.assign(argv, argv + argc);
         if(all_args.size() < 2){
+            
             spdlog::warn("Error too few arguments");
         }
         getLoginCodePayload["login_id"] = all_args[0];
@@ -241,10 +250,35 @@ int main(int argc, char const *argv[])
             ocean_session = getOceanSession(response->headers);
             spdlog::debug("Response {}", responseJson.dump(4));
             int login_state = responseJson["login_state"];
+            std::string authCode;
             switch(login_state){
                 case 0:
                     break;
                 case 1:
+                    // spdlog::info("Authentication code needed!");
+                    // spdlog::info("Please check your email!");
+                    // spdlog::info("Input your authentication code :");
+                    // std::cin >> authCode;
+                    // nlohmann::json data{
+                    //     {"acc_id", responseJson["acc_id"]},
+                    //     {"auth_code",authCode},
+                    //     {"device_id",deviceId}
+                    // };
+                    // std::string ocean_hash = getOceanHash(ocean_session, data);
+                    // httplib::Headers postHeader = {
+                    //     {"Cookie", "ocean_session="+ocean_session+";"+"ocean_hash=" + ocean_hash},
+                    //     {"Origin", "https://api-bnolauncher.bandainamco-ol.jp"},
+                    //     {"User-Agent" ,avaritia::common::url().USER_AGENT},
+                    //     {"Host", avaritia::common::url().API_ACCOUNT}
+                    // };
+                    // launcherAPI.set_default_headers(postHeader);
+                    // response = launcherAPI.Post("/api/login/authcode/check",data.dump(),"application/json");
+
+                    // POST https://api-bnolauncher.bandainamco-ol.jp/api/login/authcode/check
+                    // Use ocean_session and ocean_hash
+                    // {"acc_id":"Vp4DYRxRnNf7RWNVfOPX","auth_code":"059348","device_id":"b6bef253cc564fe8abb991e02ee7732b"}
+                    // Response
+                    // {"failed_count":0,"error_code":0}
                     break;
                 case 2:
                     break;

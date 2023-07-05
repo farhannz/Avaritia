@@ -9,3 +9,6 @@
 [submodule "submodules/ImGui-Addons"]
 	path = submodules/ImGui-Addons
 	url = https://github.com/gallickgunner/ImGui-Addons.git
+[submodule "submodules/IconFontCppHeaders"]
+	path = submodules/IconFontCppHeaders
+	url = https://github.com/juliettef/IconFontCppHeaders.git
