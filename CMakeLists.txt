@@ -9,12 +9,17 @@ project(
   LANGUAGES CXX
 )
 
+
+
 # ---- Include guards ----
+# set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
+# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
-  message(
-    FATAL_ERROR
-      "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there."
+message(
+  FATAL_ERROR
+  "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there."
   )
 endif()
 
@@ -25,34 +30,46 @@ include(cmake/CPM.cmake)
 
 # PackageProject.cmake will be used to make our target installable
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
-CPMAddPackage("gh:nlohmann/json@3.10.5")
 CPMAddPackage("gh:gabime/spdlog@1.12.0")
 CPMAddPackage("gh:libcpr/cpr#1.10.4")
 
+if(gRPC_ADDED)
+add_library(cpr::cpr ALIAS cpr)
+endif()
+
 CPMAddPackage(
-        NAME GLFW
-        GITHUB_REPOSITORY glfw/glfw
-        GIT_TAG 3.3.2
-        OPTIONS
-          "GLFW_BUILD_TESTS OFF"
-          "GLFW_BUILD_EXAMPLES OFF"
-          "GLFW_BULID_DOCS OFF"
+  NAME GLFW
+  GITHUB_REPOSITORY glfw/glfw
+  GIT_TAG 3.3.2
+  OPTIONS
+  "GLFW_BUILD_TESTS OFF"
+  "GLFW_BUILD_EXAMPLES OFF"
+  "GLFW_BULID_DOCS OFF"
+  )
+CPMAddPackage(
+  NAME nlohmann_json
+  VERSION 3.11.2
+  GITHUB_REPOSITORY nlohmann/json
+  OPTIONS
+    "JSON_BuildTests OFF"
 )
 CPMAddPackage(
   NAME fmt
   GIT_TAG 9.1.0
-  GITHUB_REPOSITORY fmtlib/fmt
-  OPTIONS "FMT_INSTALL YES" # create an installable target
+GITHUB_REPOSITORY fmtlib/fmt
+OPTIONS "FMT_INSTALL YES" # create an installable target
 )
-
-
+  
 
 # ---- Add source files ----
 
 # Note: globbing sources is considered bad practice as CMake's generators may not detect new files
 # automatically. Keep that in mind when changing files, or explicitly mention them here.
-file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
-file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
+# file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
+# file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
+
+set(headers "${CMAKE_CURRENT_SOURCE_DIR}/include/avaritia/crypto.h" "${CMAKE_CURRENT_SOURCE_DIR}/include/avaritia/request.h")
+set(sources "${CMAKE_CURRENT_SOURCE_DIR}/source/crypto.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/source/request.cpp")
 
 # ---- Create library ----
 
@@ -65,12 +82,13 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
 target_compile_options(${PROJECT_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
 
 # Link dependencies
-target_link_libraries(${PROJECT_NAME} PRIVATE cpr::cpr fmt::fmt nlohmann_json::nlohmann_json GLFW)
+target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt glfw nlohmann_json::nlohmann_json cpr::cpr spdlog::spdlog sodium)
 
 target_include_directories(
   ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                          $<INSTALL_INTERFACE:include/${PROJECT_NAME}-${PROJECT_VERSION}>
 )
+
 
 # ---- Create an installable target ----
 # this allows users to install and find the library via `find_package()`.
@@ -79,14 +97,15 @@ target_include_directories(
 # header paths
 string(TOLOWER ${PROJECT_NAME}/version.h VERSION_HEADER_LOCATION)
 
-packageProject(
-  NAME ${PROJECT_NAME}
-  VERSION ${PROJECT_VERSION}
-  NAMESPACE ${PROJECT_NAME}
-  BINARY_DIR ${PROJECT_BINARY_DIR}
-  INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include
-  INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
-  VERSION_HEADER "${VERSION_HEADER_LOCATION}"
-  COMPATIBILITY SameMajorVersion
-  DEPENDENCIES "fmt 9.1.0;json 3.10.5;cpr"
-)
+
+# packageProject(
+#   NAME ${PROJECT_NAME}
+#   VERSION ${PROJECT_VERSION}
+#   NAMESPACE ${PROJECT_NAME}
+#   BINARY_DIR ${PROJECT_BINARY_DIR}
+#   INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include
+#   INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
+#   VERSION_HEADER "${VERSION_HEADER_LOCATION}"
+#   COMPATIBILITY SameMajorVersion
+#   DEPENDENCIES "fmt 9.1.0;json 3.10.5;glfw;cpr 1.10.4"
+# )

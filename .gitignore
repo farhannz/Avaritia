@@ -26,3 +26,4 @@ _deps
 /cpm_modules
 .DS_Store
 /.cache*
+/cache*
