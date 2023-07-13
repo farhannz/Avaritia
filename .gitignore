@@ -16,10 +16,13 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 /wwwroot
-/build
-/builds
 /build/*
 /builds/*
 *.dll
 /wwwroot
 *.py
+/build*
+/.vscode
+/cpm_modules
+.DS_Store
+/.cache*
