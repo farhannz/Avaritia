@@ -27,3 +27,11 @@ _deps
 .DS_Store
 /.cache*
 /cache*
+/standalone/build*
+/standalone/bin*
+/lib*
+bin*
+build*
+submodules*
+.gitmodules
+.vscode

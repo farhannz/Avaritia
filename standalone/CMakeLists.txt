@@ -4,6 +4,7 @@ project(AvaritiaLauncher LANGUAGES CXX)
 # set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 # set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_CXX_FLAGS "-Wl,-subsystem,windows")
 
 # --- Import tools ----
 
@@ -48,16 +49,24 @@ CPMAddPackage(NAME Avaritia SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..)
 # set_property(TARGET Avaritia PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../bin/libAvaritia.dll")
 # set_property(TARGET Avaritia PROPERTY IMPORTED_IMPLIB "${PROJECT_SOURCE_DIR}/../lib/libAvaritia.dll.a")
 
-
+file(COPY source/resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
 # ---- Create standalone executable ----
-
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
+include(CMakePrintHelpers)
+cmake_print_variables(${sources})
 
 add_executable(${PROJECT_NAME} ${sources})
+
 
 add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest
     COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
         "${PROJECT_SOURCE_DIR}/../build/libAvaritia.dll"      # <--this is in-file
+        $<TARGET_FILE_DIR:AvaritiaLauncher>)                 # <--this is out-file path
+
+        add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+        "${PROJECT_SOURCE_DIR}/../bin"      # <--this is in-file
         $<TARGET_FILE_DIR:AvaritiaLauncher>)                 # <--this is out-file path
 
 # add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest
