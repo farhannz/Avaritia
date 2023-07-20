@@ -35,3 +35,4 @@ build*
 submodules*
 .gitmodules
 .vscode
+/vcpkg_installed*

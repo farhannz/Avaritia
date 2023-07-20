@@ -1,5 +1,6 @@
 #include <avaritia/baseapp.h>
-
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 void OsOpenInShell(const char* path)
 {
 #ifdef _WIN32
@@ -79,8 +80,14 @@ namespace avaritia{
         // Create window with graphics context
         this->m_window = glfwCreateWindow(this->m_width, this->m_height,this->m_windowTitle.c_str(), nullptr, nullptr);
         glfwSetWindowAttrib(this->m_window, GLFW_RESIZABLE, false);
-        if (this->m_window == nullptr)
-            return;
+        if (this->m_window == nullptr) throw std::runtime_error("GLFW Window should not be nullptr");
+        // return;
+        // GLFWimage windowIcon[1];
+        // windowIcon[0].pixels = stbi_load("icon.png", &windowIcon[0].width, &windowIcon[0].height,0, STBI_rgb_alpha);
+        // if(windowIcon[0].pixels != nullptr){
+        //     glfwSetWindowIcon(m_window,1, windowIcon);
+        //     stbi_image_free(windowIcon[0].pixels);
+        // }
         glfwMakeContextCurrent(this->m_window);
         glfwSwapInterval(1); // Enable vsync
 
@@ -129,15 +136,13 @@ namespace avaritia{
     void avaritia::BaseApp::Run(){
         this->Start();
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-        while(!glfwWindowShouldClose(this->m_window)){
+        while(!glfwWindowShouldClose(this->m_window)){            
             glfwPollEvents();
             // Start the Dear ImGui frame
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
             this->Update();
-
-
             // Rendering
             ImGui::Render();
             int display_w, display_h;
@@ -161,6 +166,20 @@ namespace avaritia{
         }
     }
 
+    void BaseApp::setWindowIcon(const std::string &path){
+        GLFWwindow* currentWindow = getWindow();
+        int width, height, channels;
+        unsigned char* pixels = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb_alpha);
+        if (!pixels) {
+            std::cerr << "Failed to load image\n";
+        }
+        GLFWimage icon[1];
+        icon[0].width = width;
+        icon[0].height = height;
+        icon[0].pixels = pixels;
+        glfwSetWindowIcon(currentWindow,1,icon);
+        stbi_image_free(pixels);
+    }
     GLFWwindow *BaseApp::getWindow(){
         return this->m_window;
     }

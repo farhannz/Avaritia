@@ -6,7 +6,7 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <ImGuiFileBrowser.h>
-#include <misc/cpp/imgui_stdlib.h>
+#include <avaritia/imgui_stdlib.h>
 #include <avaritia/imgui_spectrum.h>
 #include <vector>
 #include <stdio.h>
@@ -44,18 +44,19 @@ void OsOpenInShell(const char* path);
 namespace avaritia{
     class BaseApp{
         private:
-            std::string m_windowTitle;
-            int m_width, m_height;
-            GLFWwindow *m_window;
+        std::string m_windowTitle;
+        int m_width, m_height;
+        protected:
+        GLFWwindow *m_window = nullptr;
         public:
         BaseApp();
         BaseApp(std::string title, int width, int height);
         ~BaseApp();
         void Init();
         void Run();
+        GLFWwindow *getWindow();
+        void setWindowIcon(const std::string &path);
         void virtual Start()=0;
         void virtual Update()=0;
-
-        GLFWwindow *getWindow();
     };
 }
