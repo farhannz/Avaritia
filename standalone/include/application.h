@@ -3,32 +3,48 @@
 #include <avaritia/baseapp.h>
 #include <avaritia/crypto.h>
 #include <avaritia/request.h>
+#include <setting.h>
+#include <nlohmann/json.hpp>
 #include <vector>
 #include <nfd.hpp>
-#include <nlohmann/json.hpp>
 #include <string>
 #include <stb_image.h>
 #include <spdlog/spdlog.h>
 #include <imgui_format.h>
+#define AVARITIA_DEBUG true
+
 class AvaritiaLauncher : public avaritia::BaseApp{
     private:
         bool mainWindow = true;
         bool loginPopupWindow = false;
-        bool isMaintenance = true;
+        bool isMaintenance = false;
         bool settingWarning = false;
         bool setting_window = false;
         bool saveAccount = false;
         bool isAutoLogin = false;
         bool isConfigExist = false;
+        bool isWrongPassword = false;
+        bool invalidEmail = false;
+        bool needAuth = false;
+        bool isAuthOk = false;
         imgui_addons::ImGuiFileBrowser file_dialog;
         nlohmann::json ipApiResponseJson;
         std::string location = "Getting location....";
         std::string gameState = "Getting game state...";
-        std::string gamePath = "placeholder";
-        std::string m_email = "placeholder", m_pw = "placeholder";
+        std::string gamePath = "";
+        std::string m_email , m_pw, m_auth;
         std::string hashPassword = "placeholder";
         std::string tempLoginToken = "placeholder";
+        std::string tempLoginCode = "placeholder";
+        std::string ocean_session, accId;
         std::vector<cpr::AsyncResponse> responses;
+        GLuint githubTexture;
+        avaritia::setting::GlobalSetting config;
+        std::vector<std::exception> exceptionList;
+        int githubTextureW;
+        int githubTextureH;
+        avaritia::LoginState loginState = static_cast<avaritia::LoginState>(127);
+        cpr::Cookies currentCookies;
     public:
     AvaritiaLauncher(std::string title, int w, int h) : avaritia::BaseApp(title, w , h){
 
@@ -46,13 +62,6 @@ void AvaritiaLauncher::Start(){
     NFD::Init();
     responses.emplace_back(cpr::GetAsync(cpr::Url("http://ip-api.com/json")));
     responses.emplace_back(cpr::GetAsync(cpr::Url("https://flg-main.aws.blue-protocol.com/flagfile/app_status")));
-    // ipApiResponse = cpr::GetAsync(cpr::Url("http://ip-api.com/json"));
-    // if(checkMaintenance.status_code == cpr::status::HTTP_OK) 
-    //     this->isMaintenance = (checkMaintenance.text == "maintenance");
-    // if(ipApiResponse.status_code == cpr::status::HTTP_OK ){
-    //     this->ipApiResponseJson = nlohmann::json::parse(ipApiResponse.text);
-    //     this->location = this->ipApiResponseJson["country"];
-    // }
     float baseFontSize = 18.0f; 
     float iconFontSize = baseFontSize * 2.0f / 3.0f;
     ImFontConfig icons_config; 
@@ -66,13 +75,34 @@ void AvaritiaLauncher::Start(){
     io.Fonts->AddFontFromFileTTF( "resources/fonts/" FONT_ICON_FILE_NAME_FAS, iconFontSize, &icons_config, icons_ranges );
     io.Fonts->AddFontFromFileTTF( "resources/fonts/fa-v4compatibility.ttf", iconFontSize, &icons_config, icons_ranges );
     io.Fonts->AddFontFromFileTTF( "resources/fonts/" FONT_ICON_FILE_NAME_FAB, iconFontSize, &icons_config, icons_ranges );
-    
+    isConfigExist = config.isConfigFileExist();
+    if(!isConfigExist){
+        config.setGuId(avaritia::setting::DeviceID().ToString());
+        config.saveConfigToFile();
+    }
+    config.loadConfig();
+    gamePath = config.getGamePath();
 }
+
 void AvaritiaLauncher::Update(){
     {
-        ImGui::Text(this->hashPassword.c_str());
-        ImGui::Text(this->tempLoginToken.c_str());
 
+        // BEGIN DEBUG ONLY
+        if(AVARITIA_DEBUG){
+            ImGui::TextFmt("Hash password : {}", this->hashPassword);
+            ImGui::TextFmt("Login token : {}", this->tempLoginToken);
+            ImGui::TextFmt("Login Code : {}", this->tempLoginCode);
+            ImGui::TextFmt("Login State : {}", static_cast<int>(this->loginState));
+            for(auto &cookie : currentCookies){
+                ImGui::TextFmt("{} : {}", cookie.GetName(), cookie.GetValue());
+                if(cookie.GetName() == "ocean_session") this->ocean_session = cookie.GetValue();
+            }
+
+            for(auto &e : exceptionList){
+                ImGui::TextFmt("{}",e.what());
+            }
+        }
+        // END DEBUG ONLY
         // if(loginPopupWindow || setting_window) ImGui::BeginDisabled();
         // static float f = 0.0f;
         // ImGui::Text("%s %s",encrypted, decrypted);
@@ -88,14 +118,36 @@ void AvaritiaLauncher::Update(){
             ImGui::Spacing();
             ImGui::Spacing();
             // ImGui::Indent(ImGui::GetContentRegionAvail().x * .125f);
+
+            // Login Window
             ImGui::PushItemWidth(ImGui::GetContentRegionAvail().x);
             ImGui::Text(ICON_FA_ENVELOPE " Email:");
             bool isEmailEnter = ImGui::InputText("##email", &this->m_email, ImGuiInputTextFlags_None | ImGuiInputTextFlags_EnterReturnsTrue);
             ImGui::Text(ICON_FA_KEY " Password:");
             bool isPasswordEnter = ImGui::InputText("##password", &this->m_pw, ImGuiInputTextFlags_Password | ImGuiInputTextFlags_EnterReturnsTrue);
             ImGui::PopItemWidth();
-            // if(this->isMaintenance) ImGui::BeginDisabled();
-            if( ImGui::Button(ICON_FA_RIGHT_TO_BRACKET " Login") || isEmailEnter || isPasswordEnter){
+
+            // Auth Code Input Text
+            if(needAuth){
+                ImGui::Text(ICON_FA_FINGERPRINT " Auth Code:");
+                bool isAuthEnter = ImGui::InputText("##auth", &this->m_auth, ImGuiInputTextFlags_EnterReturnsTrue);
+                ImGui::SameLine();
+                if(ImGui::Button("Submit") || isAuthEnter){
+                    // Send authentication code
+                    try{
+                        needAuth = avaritia::Request::sendAuthCode(this->accId, this->m_auth,config.getGuId(),this->ocean_session);
+                        isAuthOk = needAuth;
+                    }
+                    catch(std::exception &e){
+                        exceptionList.push_back(e);
+                    }
+                }
+            }
+            
+            
+            if(this->isMaintenance) ImGui::BeginDisabled();
+            if(this->invalidEmail)  ImGui::TextFmt("{} Invalid Email", ICON_FA_TRIANGLE_EXCLAMATION);
+            if(ImGui::Button(ICON_FA_RIGHT_TO_BRACKET " Login") || isEmailEnter || isPasswordEnter || isAuthOk){
                 for(int i = 0;i<(int)m_email.size();++i){
                     m_email[i] = tolower(m_email[i]);
                 }
@@ -103,33 +155,72 @@ void AvaritiaLauncher::Update(){
                 if(std::regex_match(m_email, emailValidator) && !std::string_view(m_pw).empty()){
                     // m_email = email;
                     // m_pw = password;
-                    if(this->saveAccount){
-                        // if(!accountList.empty() && (accountList.begin()->first == "alt@alt.com" || accountList.begin()->first == "example@example.com")){
-                        //     accountList.clear();
-                        // }
-                        // if((accountList.begin()->first == "alt@alt.com" || accountList.begin()->first == "example@example.com")) 
-                        // accountList.insert({m_email, merged});
-                        this->hashPassword = avaritia::Crypto::Encrypt(m_pw);
-                        saveAccount = false;
-                        // if(accountList.size()==1) defaultAccount = {accountList.begin()->first, "encrypted"};
-                        // free(tmp);
+                    try{
+                        // Ugly code
+                        tempLoginToken = avaritia::Request::getLoginToken(avaritia::LoginRequest::Launcher, config.getGuId());
+
+                        // Ugly validation code
+                        if(tempLoginToken.empty()){
+                            ImGui::Text("Failed on retrieveng login token");
+                            return;
+                        }
+                        tempLoginCode = avaritia::Request::getLoginCode(avaritia::LoginRequest::Launcher, m_email, m_pw, tempLoginToken);
+                        if(tempLoginCode.empty()){
+                            ImGui::Text("Failed on retrieveng login code"); 
+                            return;
+                        }
+                        if(tempLoginCode == "wrong"){
+                            isWrongPassword = true;
+                            return;
+                        }
+                        loginState = avaritia::Request::getLoginState(avaritia::LoginRequest::Launcher, tempLoginToken, currentCookies, accId);
+                        if(loginState == avaritia::LoginState::CheckAuth){
+                            this->needAuth = true;
+                            return;
+                        }
+                        isWrongPassword = false;
+                        if(this->saveAccount){
+                            // if(!accountList.empty() && (accountList.begin()->first == "alt@alt.com" || accountList.begin()->first == "example@example.com")){
+                            //     accountList.clear();
+                            // }
+                            // if((accountList.begin()->first == "alt@alt.com" || accountList.begin()->first == "example@example.com")) 
+                            // accountList.insert({m_email, merged});
+                            this->hashPassword = avaritia::Crypto::Encrypt(m_pw);
+                            saveAccount = false;
+                            // if(accountList.size()==1) defaultAccount = {accountList.begin()->first, "encrypted"};
+                            // free(tmp);
+                        }
+                        // ImGui::Text(loginToken.c_str());
+                        // this->loginPopupWindow = false;
                     }
-                    this->loginPopupWindow = true;
+                    catch(std::exception &e){
+                        exceptionList.push_back(e);
+                    }
+                    // this->loginPopupWindow = true;
+                }
+                else{
+                    invalidEmail = true;
                 }
             }
+            if(!this->isMaintenance) ImGui::EndDisabled();
             // if(isMaintenance) ImGui::EndDisabled();
             // Right Col
             // ImGui::SameLine();
             ImGui::SameLine();
             if(ImGui::Button(ICON_FA_GEAR " Setting")) setting_window=true;
             ImGui::SameLine();
-            ImGui::Checkbox("Auto Login", &this->isAutoLogin); ImGui::SameLine(); HelpMarker("If this box is ticked, this account will be set as default");
+            // ImGui::Checkbox("Auto Login", &this->isAutoLogin); ImGui::SameLine(); HelpMarker("If this box is ticked, this account will be set as default");
+            ImGui::Checkbox("Save Account",&this->saveAccount);
+            ImGui::SameLine();
+            HelpMarker("When you login, your current account will be saved into the account list.");
             // config.setAutoLogin(isAutoLogin);
             // ImGui::Text("%s",ipApiResponseJson.dump(4).c_str());
+            if(this->isWrongPassword){
+                ImGui::TextWrapped(ICON_FA_TRIANGLE_EXCLAMATION " Your email or password is either incorrect or unregistered!");
+            }
             for(int i = 0;i<4;++i){
                 ImGui::Spacing();
             }
-            spdlog::debug("{}", this->responses[0].valid());
 
             // GET IP GEOLOCATION, ASYNC
             if(this->responses[0].valid()){
@@ -149,14 +240,17 @@ void AvaritiaLauncher::Update(){
                     ImGui::TextWrapped(ICON_FA_TRIANGLE_EXCLAMATION " The game is currently on maintenance, please wait until the maintenance is over!");
                 }
             }
-            ImGui::TextFmt("Debug {} {} {}", this->responses[0].valid(), this->responses[1].valid(), this->isMaintenance);
+            // ImGui::TextFmt("Debug {} {} {}", this->responses[0].valid(), this->responses[1].valid(), this->isMaintenance);
             ImGui::TextFmt("Game State : {}", gameState);
             ImGui::TextFmt("Your Location {} : {}", ICON_FA_THUMBTACK, location);
 
             ImGui::Spacing();
-            ImGui::Spacing();
-            ImGui::Spacing();
-            if(ImGui::Button(ICON_FA_GITHUB "##gh", ImVec2(30,30))) OsOpenInShell("https://github.com/farhannz/avaritia");
+            if(ImGui::Button(ICON_FA_GITHUB "##gh", ImVec2(30,30))) {
+                OsOpenInShell("https://github.com/farhannz/avaritia");
+            }
+            if(ImGui::IsItemHovered()){
+                ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
+            }
             ImGui::EndChild();
         }
 
@@ -209,12 +303,12 @@ void AvaritiaLauncher::Update(){
             }
             // ImGui::Indent(-(rWidth * 0.25f * accountList.size()));
             // ImGui::Text("%s", defaultAccount.email.c_str());
-            // ImGui::Button(ICON_FA_PLUS); ImGui::SameLine();
-            // ImGui::Button(ICON_FA_MINUS); ImGui::SameLine();
+            ImGui::Button(ICON_FA_PLUS " Add Account"); ImGui::SameLine();
+            // ImGui::Button(ICON_FA_MINUS " Remove Account"); ImGui::SameLine();
             // ImGui::SameLine();
-            ImGui::Checkbox("Save Account",&this->saveAccount);
-            ImGui::SameLine();
-            HelpMarker("When you login, your current account will be saved into the account list.");
+            // ImGui::Checkbox("Save Account",&this->saveAccount);
+            // ImGui::SameLine();
+            // HelpMarker("When you login, your current account will be saved into the account list.");
             ImGui::EndChild();
             // ImGui::PopStyleVar();
         }
@@ -222,35 +316,57 @@ void AvaritiaLauncher::Update(){
         ImGui::End();
     }
 
-    // PopUP Region
-    if (this->loginPopupWindow){
-        // ImGui::Begin("Login", &loginPopupWindow, 0);
-        ImVec2 sz = ImGui::GetMainViewport()->Size;
-        ImVec2 pos = ImGui::GetMainViewport()->Pos;
-        sz.x *= .5f; sz.y *= .5f;
-        pos.x = (pos.x + sz.x); pos.y = (pos.y + sz.y);
-        sz.x *= .5f;
-        ImGui::SetNextWindowSize(sz,ImGuiCond_Always);
-        ImGui::SetNextWindowPos(pos,ImGuiCond_Always, ImVec2(0.0f,0.0f));
-        // ImGui::BeginPopupContextVoid("##login_notif");
-        try{
-            tempLoginToken = avaritia::Request::getLoginToken(avaritia::LoginRequest::Launcher, "asdasd");
-            // ImGui::Text(loginToken.c_str());
-            this->loginPopupWindow = false;
-        }
-        catch(std::exception &e){
-            ImGui::Text(e.what());
-        }
-        // if(!service_started){
-        //     startApplication(const_cast<char *>(std::string("main.exe").c_str()), service_started,si,pi,std::vector<std::string>{m_email,m_pw,config.getGuId(),config.getGamePath()});
-        //     config.saveConfigToFile();
-        // }
-        // if (ImGui::Button("Close Me")){
-        //     loginPopupWindow = false;
-        // }
-        // ImGui::EndPopup();
-        // ImGui::End();
-    }
+    // // PopUP Region
+    // if (this->loginPopupWindow){
+    //     // ImGui::Begin("Login", &loginPopupWindow, 0);
+    //     ImVec2 sz = ImGui::GetMainViewport()->Size;
+    //     ImVec2 pos = ImGui::GetMainViewport()->Pos;
+    //     sz.x *= .5f; sz.y *= .5f;
+    //     pos.x = (pos.x + sz.x); pos.y = (pos.y + sz.y);
+    //     sz.x *= .5f;
+    //     ImGui::SetNextWindowSize(sz,ImGuiCond_Always);
+    //     ImGui::SetNextWindowPos(pos,ImGuiCond_Always, ImVec2(0.0f,0.0f));
+    //     ImGui::BeginPopupContextVoid("##login_notif");
+    //     try{
+    //         // Ugly code
+
+    //         tempLoginToken = avaritia::Request::getLoginToken(avaritia::LoginRequest::Launcher, config.getGuId());
+    //         if(tempLoginToken.empty()){ImGui::Text("Failed on retrieveng login token"); this->loginPopupWindow = false;return;}
+    //         tempLoginCode = avaritia::Request::getLoginCode(avaritia::LoginRequest::Launcher, m_email, m_pw, tempLoginToken);
+    //         if(tempLoginCode.empty()){ImGui::Text("Failed on retrieveng login code"); this->loginPopupWindow = false;return;}
+    //         if(tempLoginCode == "wrong"){isWrongPassword = true; this->loginPopupWindow=false; return;}
+    //         loginState = avaritia::Request::getLoginState(avaritia::LoginRequest::Launcher, tempLoginToken, currentCookies);
+    //         if(loginState == avaritia::LoginState::CheckAuth) this->needAuth = true; this->loginPopupWindow=false;return;
+            
+
+
+    //         if(this->saveAccount){
+    //             // if(!accountList.empty() && (accountList.begin()->first == "alt@alt.com" || accountList.begin()->first == "example@example.com")){
+    //             //     accountList.clear();
+    //             // }
+    //             // if((accountList.begin()->first == "alt@alt.com" || accountList.begin()->first == "example@example.com")) 
+    //             // accountList.insert({m_email, merged});
+    //             this->hashPassword = avaritia::Crypto::Encrypt(m_pw);
+    //             saveAccount = false;
+    //             // if(accountList.size()==1) defaultAccount = {accountList.begin()->first, "encrypted"};
+    //             // free(tmp);
+    //         }
+    //         // ImGui::Text(loginToken.c_str());
+    //         this->loginPopupWindow = false;
+    //     }
+    //     catch(std::exception &e){
+    //         ImGui::Text(e.what());
+    //     }
+    //     // if(!service_started){
+    //     //     startApplication(const_cast<char *>(std::string("main.exe").c_str()), service_started,si,pi,std::vector<std::string>{m_email,m_pw,config.getGuId(),config.getGamePath()});
+    //     //     config.saveConfigToFile();
+    //     // }
+    //     // if (ImGui::Button("Close Me")){
+    //     //     loginPopupWindow = false;
+    //     // }
+    //     ImGui::EndPopup();
+    //     // ImGui::End();
+    // }
 
     if (setting_window || !isConfigExist){
         bool browse = false;
@@ -268,6 +384,7 @@ void AvaritiaLauncher::Update(){
             }
             // browse = true;
         }
+        ImGui::TextFmt("Device ID : {}", config.getGuId());
         // if(browse){
         //     ImGui::OpenPopup("Browse");
         // }
@@ -280,9 +397,9 @@ void AvaritiaLauncher::Update(){
             if(!gamePath.empty()){
                 setting_window = false;
                 browse = false;
-                // config.setGamePath(gamepath);
+                config.setGamePath(gamePath);
                 // config.setAutoLogin(isAutoLogin);
-                // config.saveConfigToFile();
+                config.saveConfigToFile();
                 isConfigExist = true;
                 settingWarning =false;
             }

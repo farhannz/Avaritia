@@ -45,6 +45,9 @@ CPMAddPackage("gh:gallickgunner/ImGui-Addons#8a3c2702e0b690e46e7a21266f5d0af4b99
 CPMAddPackage("gh:libcpr/cpr#1.10.4")
 SET(CURL_ZLIB OFF CACHE STRING "" FORCE)
 
+include(CMakePrintHelpers)
+cmake_print_variables(${CMAKE_CXX_COMPILER})
+
 
 find_package(Stb REQUIRED)
 # find_package(cpr CONFIG REQUIRED)
@@ -60,8 +63,10 @@ find_package(unofficial-sodium CONFIG REQUIRED)
 find_package(ZLIB REQUIRED)
 # target_include_directories(${PROJECT_NAME} PRIVATE ${Stb_INCLUDE_DIR} ) 
 
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+  set(CMAKE_CXX_FLAGS "-Wl,-subsystem,windows -s")
+endif()
 # ---- Add source files ----
 
 # Note: globbing sources is considered bad practice as CMake's generators may not detect new files

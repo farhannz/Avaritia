@@ -1,5 +1,5 @@
 #include <avaritia/crypto.h>
-#include <avaritia/MurmurHash3.h>
+#include <MurmurHash3.h>
 #include <stdexcept>
 #include <iostream>
 namespace avaritia

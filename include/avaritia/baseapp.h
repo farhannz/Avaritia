@@ -6,8 +6,8 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 #include <ImGuiFileBrowser.h>
-#include <avaritia/imgui_stdlib.h>
-#include <avaritia/imgui_spectrum.h>
+#include <imgui_stdlib.h>
+#include <imgui_spectrum.h>
 #include <vector>
 #include <stdio.h>
 #include <cctype>
@@ -40,7 +40,7 @@
 static void glfw_error_callback(int error, const char* description);
 void HelpMarker(const char* desc);
 void OsOpenInShell(const char* path);
-
+bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_width, int* out_height);
 namespace avaritia{
     class BaseApp{
         private:

@@ -19,8 +19,10 @@ project(AvaritiaLauncher LANGUAGES CXX)
 # set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 # set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-
-set(CMAKE_CXX_FLAGS "-Wl,-subsystem,windows")
+SET(CURL_ZLIB OFF CACHE STRING "" FORCE)
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+  set(CMAKE_CXX_FLAGS "-Wl,-subsystem,windows -s")
+endif()
 
 # # --- Import tools ----
 
@@ -75,12 +77,12 @@ add_executable(${PROJECT_NAME} ${sources})
 foreach(_files  ${ThirdPartyDLLS})
   cmake_print_variables(${_files})
   add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+  COMMAND ${CMAKE_COMMAND} -E copy  # which executes "cmake - E copy_if_different..."
   "${_files}"      # <--this is in-file
   $<TARGET_FILE_DIR:AvaritiaLauncher>)                 # <--this is out-file path
 endforeach(_files)
 
-file(COPY source/resources DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
+file(COPY "${PROJECT_SOURCE_DIR}/source/resources" DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
 
 
 # add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest

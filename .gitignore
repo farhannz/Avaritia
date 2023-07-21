@@ -36,3 +36,4 @@ submodules*
 .gitmodules
 .vscode
 /vcpkg_installed*
+*.json

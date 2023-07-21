@@ -1,4 +1,4 @@
-#include <avaritia/imgui_spectrum.h>
+#include <imgui_spectrum.h>
 #include <imgui.h>
 
 namespace ImGui {
