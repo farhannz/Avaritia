@@ -22,6 +22,9 @@ jobs:
       with:
         path: cache-msvc
         key: ${{ runner.os }}-msvc
+    - uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: amd64_x86
     - uses: lukka/get-cmake@latest
     - name: Setup vcpkg
       uses: lukka/run-vcpkg@v11
@@ -33,7 +36,7 @@ jobs:
         # If not using a submodule for vcpkg sources, this specifies which commit
         # id must be checkout from a Git repo. 
         # Note: it must not be set if using a Git submodule for vcpkg.
-        vcpkgGitCommitId: 'f6a5d4e8eb7476b8d7fc12a56dff300c1c986131'
+        vcpkgGitCommitId: '50a4aa2be9c05e16d34c98369a8e1dd01796c3f0'
 
         # This is the glob expression used to locate the vcpkg.json. 
         # Change it to match a single manifest file you want to use.
@@ -46,7 +49,7 @@ jobs:
     - name: Configure Library
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -S ${{github.workspace}} -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\\scripts\\buildsystems\\vcpkg.cmake -G Ninja
+      run: cmake -S ${{github.workspace}} -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\\scripts\\buildsystems\\vcpkg.cmake
 
     - name: Build Library
       # Build your program with the given configuration
@@ -55,7 +58,7 @@ jobs:
     - name: Configure Standalone GUI Launcher
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -S ${{github.workspace}}\\standalone -B build\\standalone -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\\scripts/buildsystems\\vcpkg.cmake -G Ninja
+      run: cmake -S ${{github.workspace}}\\standalone -B build\\standalone -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE=${{env.VCPKG_ROOT}}\\scripts/buildsystems\\vcpkg.cmake
 
     - name: Build Standalone GUI Launcher
       # Build your program with the given configuration
