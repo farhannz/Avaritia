@@ -28,7 +28,8 @@ jobs:
       with: 
         repository: microsoft/vcpkg
         path: ./vcpkg
-
+        
+    - uses: actions/checkout@v3
     - name : Bootstrap VCPKG
       run: ./vcpkg/bootstrap-vcpkg.bat
 
@@ -37,7 +38,7 @@ jobs:
     - name: Configure Library
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -S. -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -GNinja
+      run: cmake -S ${{github.workspace}} -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -GNinja
 
     - name: Build Library
       # Build your program with the given configuration
@@ -46,7 +47,7 @@ jobs:
     - name: Configure Standalone GUI Launcher
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -Sstandalone -B build/standalone -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}  -GNinja
+      run: cmake -S ${{github.workspace}}/standalone -B build/standalone -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}  -GNinja
 
     - name: Build Standalone GUI Launcher
       # Build your program with the given configuration
