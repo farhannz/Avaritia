@@ -34,7 +34,7 @@ jobs:
     
     - name: Bootstrap VCPKG
       run: |
-        ./vcpkg/bootstrap-vcpkg.bat \
+        ./vcpkg/bootstrap-vcpkg.bat
         echo "VCPKG_ROOT=${GITHUB_WORKSPACE}/vcpkg" >> $GITHUB_ENV
         
     - name: Configure Library
