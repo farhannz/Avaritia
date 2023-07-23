@@ -30,7 +30,7 @@ jobs:
         path: ./vcpkg
 
     - name : Bootstrap VCPKG
-      run: ./${{ github.workspace }}/vcpkg/bootstrap-vcpkg.bat
+      run: ./vcpkg/bootstrap-vcpkg.bat
 
 
 
