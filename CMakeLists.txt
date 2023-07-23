@@ -93,13 +93,16 @@ target_include_directories(
                          ${Stb_INCLUDE_DIR}
                         #  ${stb_SOURCE_DIR}
 )
+
 target_link_libraries(${PROJECT_NAME} PUBLIC 
 OpenGL::GL glfw glm::glm 
 nlohmann_json::nlohmann_json fmt::fmt 
 cpr::cpr spdlog::spdlog_header_only
 imgui::imgui  unofficial-sodium::sodium 
-unofficial-sodium::sodium_config_public
 )
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  target_link_libraries(${PROJECT_NAME} PUBLIC unofficial-sodium::sodium_config_public)
+endif()
 
 
 # add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
