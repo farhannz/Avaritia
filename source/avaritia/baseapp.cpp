@@ -58,7 +58,7 @@ bool LoadTextureFromFile(const char* filename, GLuint* out_texture, int* out_wid
 void HelpMarker(const char* desc)
 {
     ImGui::TextDisabled(ICON_FA_QUESTION "");
-    if (ImGui::BeginItemTooltip())
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_ForTooltip) && ImGui::BeginTooltip())
     {
         ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
         ImGui::TextUnformatted(desc);
