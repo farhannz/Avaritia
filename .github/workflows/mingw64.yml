@@ -27,9 +27,9 @@ jobs:
     - uses: actions/checkout@v3
 
     - name : Bootstrap VCPKG
-      run: | 
-        git clone https://github.com/microsoft/vcpkg.git \ 
-        ./${{ github.workspace }}/vcpkg/bootstrap-vcpkg.bat
+      with: microsoft/vcpkgmicrosoft/vcpkg
+      path: ./vcpkg
+      run: ./${{ github.workspace }}/vcpkg/bootstrap-vcpkg.bat
 
 
 
