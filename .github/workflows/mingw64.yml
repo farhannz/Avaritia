@@ -25,10 +25,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      
+
+    - name : Get VCPKG
       with: 
         repository: microsoft/vcpkg
         path: ./vcpkg
-
+        
     - name : Bootstrap VCPKG
       run: ./vcpkg/bootstrap-vcpkg.bat
 
