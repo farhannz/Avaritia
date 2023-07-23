@@ -28,8 +28,7 @@ jobs:
       with: 
         repository: microsoft/vcpkg
         path: ./vcpkg
-        
-    - uses: actions/checkout@v3
+
     - name : Bootstrap VCPKG
       run: ./vcpkg/bootstrap-vcpkg.bat
 
