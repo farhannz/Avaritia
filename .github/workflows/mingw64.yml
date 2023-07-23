@@ -25,10 +25,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with: 
+        repository: microsoft/vcpkgmicrosoft/vcpkg
+        path: ./vcpkg
 
     - name : Bootstrap VCPKG
-      with: microsoft/vcpkgmicrosoft/vcpkg
-      path: ./vcpkg
       run: ./${{ github.workspace }}/vcpkg/bootstrap-vcpkg.bat
 
 
