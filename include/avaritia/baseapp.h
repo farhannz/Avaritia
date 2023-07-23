@@ -56,6 +56,7 @@ namespace avaritia{
         void Run();
         GLFWwindow *getWindow();
         void setWindowIcon(const std::string &path);
+        void closeWindow();
         void virtual Start()=0;
         void virtual Update()=0;
     };

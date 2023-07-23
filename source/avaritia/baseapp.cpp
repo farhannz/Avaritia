@@ -201,6 +201,9 @@ namespace avaritia{
         }
     }
 
+    void BaseApp::closeWindow(){
+        glfwSetWindowShouldClose(this->m_window,GL_TRUE);
+    }
     void BaseApp::setWindowIcon(const std::string &path){
         GLFWwindow* currentWindow = getWindow();
         int width, height, channels;

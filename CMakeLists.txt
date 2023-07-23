@@ -60,7 +60,6 @@ find_package(spdlog CONFIG REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(unofficial-sodium CONFIG REQUIRED)
 # find_package(quill CONFIG REQUIRED)
-find_package(ZLIB REQUIRED)
 # target_include_directories(${PROJECT_NAME} PRIVATE ${Stb_INCLUDE_DIR} ) 
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")
@@ -78,7 +77,7 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/
 
 # ---- Create library ----
 
-add_library(${PROJECT_NAME} SHARED ${headers} ${sources})
+add_library(${PROJECT_NAME} STATIC ${headers} ${sources})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
 
 # being a cross-platform target, we enforce standards conformance on MSVC
@@ -97,17 +96,16 @@ target_include_directories(
 target_link_libraries(${PROJECT_NAME} PUBLIC 
 OpenGL::GL glfw glm::glm 
 nlohmann_json::nlohmann_json fmt::fmt 
-ZLIB::ZLIB
-cpr::cpr spdlog::spdlog
+cpr::cpr spdlog::spdlog_header_only
 imgui::imgui  unofficial-sodium::sodium 
 unofficial-sodium::sodium_config_public
 )
 
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:${PROJECT_NAME}> $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}>
-  COMMAND_EXPAND_LISTS
-  )
+# add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#   COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:${PROJECT_NAME}> $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}>
+#   COMMAND_EXPAND_LISTS
+#   )
 
 # # ---- Create an installable target ----
 # # this allows users to install and find the library via `find_package()`.

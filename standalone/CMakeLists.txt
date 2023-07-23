@@ -21,8 +21,9 @@ project(AvaritiaLauncher LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 SET(CURL_ZLIB OFF CACHE STRING "" FORCE)
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
-  set(CMAKE_CXX_FLAGS "-Wl,-subsystem,windows -s")
+set(CMAKE_CXX_FLAGS "-Wl,-subsystem,windows -s")
 endif()
+set(CMAKE_CXX_FLAGS "-static-libstdc++")
 
 # # --- Import tools ----
 
@@ -57,17 +58,25 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 list(APPEND sources "${ImGui-Addons_SOURCE_DIR}/FileBrowser/ImGuiFileBrowser.cpp")
 
-add_library(Avaritia SHARED IMPORTED)
-add_library(cpr SHARED IMPORTED)
-add_library(fmt SHARED IMPORTED)
-set_property(TARGET Avaritia PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../bin/")
-set_property(TARGET Avaritia PROPERTY IMPORTED_IMPLIB "${PROJECT_SOURCE_DIR}/../lib/libAvaritia.dll.a")
-set_property(TARGET cpr PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../bin/")
-set_property(TARGET cpr PROPERTY IMPORTED_IMPLIB "${PROJECT_SOURCE_DIR}/../lib/libcpr.dll.a")
-set_property(TARGET fmt PROPERTY IMPORTED_LOCATION "${VCPKG_INSTALLED_DIR}/bin/")
-set_property(TARGET fmt PROPERTY IMPORTED_IMPLIB "${VCPKG_INSTALLED_DIR}/lib/libfmt.dll.a")
+add_library(Avaritia STATIC IMPORTED)
+# add_library(cpr SHARED IMPORTED)
+# add_library(fmt STATIC IMPORTED)
+set_property(TARGET Avaritia PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../lib/libavaritia.a")
+# set_property(TARGET Avaritia PROPERTY IMPORTED_IMPLIB "${PROJECT_SOURCE_DIR}/../lib/libAvaritia.a")
+# set_property(TARGET cpr PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../bin/")
+# set_property(TARGET cpr PROPERTY IMPORTED_IMPLIB "${PROJECT_SOURCE_DIR}/../lib/libcpr.dll.a")
+# set_property(TARGET fmt PROPERTY IMPORTED_LOCATION "${VCPKG_INSTALLED_DIR}/lib/libfmt.a")
+# set_property(TARGET fmt PROPERTY IMPORTED_IMPLIB "${VCPKG_INSTALLED_DIR}/lib/libfmt.a")
 
-
+find_package(cpr CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
+find_package(fmt CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
+find_package(glfw3 CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
+find_package(glm CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
+find_package(imgui CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
+find_package(nlohmann_json CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
+find_package(spdlog CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
+find_package(unofficial-sodium CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
+# set(OPENGL_DIR ${VCPKG_INSTALLED_DIR})
 
 include(CMakePrintHelpers)
 # cmake_print_variables(${stb_SOURCE_DIR})
@@ -85,6 +94,10 @@ endforeach(_files)
 file(COPY "${PROJECT_SOURCE_DIR}/source/resources" DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
 
 
+# add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest
+#     COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
+#         "${PROJECT_SOURCE_DIR}/../bin/*"      # <--this is in-file
+#         $<TARGET_FILE_DIR:AvaritiaLauncher>)                 # <--this is out-file path
 # add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest
 #     COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
 #         "${PROJECT_SOURCE_DIR}/../bin/*"      # <--this is in-file
@@ -107,6 +120,11 @@ ${IconFontCppHeaders_SOURCE_DIR})
 
 target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/source/main.rc")
 
-target_link_libraries(${PROJECT_NAME} PUBLIC cpr nfd fmt Avaritia )
+target_link_libraries(${PROJECT_NAME} PUBLIC Avaritia nfd glfw glm::glm 
+opengl32 stdc++fs
+nlohmann_json::nlohmann_json fmt::fmt 
+spdlog::spdlog_header_only cpr::cpr
+imgui::imgui  unofficial-sodium::sodium 
+unofficial-sodium::sodium_config_public  )
 
 
