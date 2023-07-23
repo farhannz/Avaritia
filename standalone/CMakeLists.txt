@@ -20,10 +20,13 @@ project(AvaritiaLauncher LANGUAGES CXX)
 # set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 SET(CURL_ZLIB OFF CACHE STRING "" FORCE)
-if (CMAKE_BUILD_TYPE STREQUAL "Release")
-set(CMAKE_CXX_FLAGS "-Wl,-subsystem,windows -s")
+if (CMAKE_BUILD_TYPE STREQUAL "Release" AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set(CMAKE_CXX_FLAGS "-Wl,-subsystem,windows -s")
 endif()
-set(CMAKE_CXX_FLAGS "-static-libstdc++")
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set(CMAKE_CXX_FLAGS "-static-libstdc++")
+endif()
 
 # # --- Import tools ----
 

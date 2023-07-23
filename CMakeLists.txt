@@ -61,9 +61,10 @@ find_package(OpenGL REQUIRED)
 find_package(unofficial-sodium CONFIG REQUIRED)
 # find_package(quill CONFIG REQUIRED)
 # target_include_directories(${PROJECT_NAME} PRIVATE ${Stb_INCLUDE_DIR} ) 
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")
-if (CMAKE_BUILD_TYPE STREQUAL "Release")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")
+endif()
+if (CMAKE_BUILD_TYPE STREQUAL "Release" AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_CXX_FLAGS "-Wl,-subsystem,windows -s")
 endif()
 # ---- Add source files ----
