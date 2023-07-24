@@ -89,7 +89,7 @@ find_package(nlohmann_json CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
 find_package(spdlog CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
 find_package(unofficial-sodium CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
 # set(OPENGL_DIR ${VCPKG_INSTALLED_DIR})
-
+SET(CURL_ZLIB OFF CACHE STRING "" FORCE)
 include(CMakePrintHelpers)
 # cmake_print_variables(${stb_SOURCE_DIR})
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
