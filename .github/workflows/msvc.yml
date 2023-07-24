@@ -46,7 +46,7 @@ jobs:
         # `**/path/from/root/of/repo/to/vcpkg.json` to match the desired `vcpkg.json`.
         vcpkgJsonGlob: '**/vcpkg.json'
     
-    - run: .\${{env.VCPKG_ROOT}}\vcpkg install curl
+    - run: ${{env.VCPKG_ROOT}}\vcpkg.exe install curl
     - name: Configure Library
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
