@@ -38,12 +38,12 @@ endif()
 
 include(cmake/CPM.cmake)
 include(CMakePrintHelpers)
+SET(CURL_ZLIB OFF CACHE STRING "" FORCE)
 # PackageProject.cmake will be used to make our target installable
 CPMAddPackage("gh:TheLartians/PackageProject.cmake@1.8.0")
 CPMAddPackage("gh:juliettef/IconFontCppHeaders#90da8021ec7c7792c454c3f43516595754a91765")
 CPMAddPackage("gh:gallickgunner/ImGui-Addons#8a3c2702e0b690e46e7a21266f5d0af4b99d410d")
 CPMAddPackage("gh:libcpr/cpr#1.10.4")
-SET(CURL_ZLIB OFF CACHE STRING "" FORCE)
 
 include(CMakePrintHelpers)
 cmake_print_variables(${CMAKE_CXX_COMPILER})
