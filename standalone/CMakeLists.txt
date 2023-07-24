@@ -62,9 +62,15 @@ file(GLOB sources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 list(APPEND sources "${ImGui-Addons_SOURCE_DIR}/FileBrowser/ImGuiFileBrowser.cpp")
 
 add_library(Avaritia STATIC IMPORTED)
+cmake_print_variables(${CMAKE_CXX_COMPILER_ID})
 # add_library(cpr SHARED IMPORTED)
 # add_library(fmt STATIC IMPORTED)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 set_property(TARGET Avaritia PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../lib/libavaritia.a")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+cmake_print_variables(${CMAKE_BUILD_TYPE})
+set_property(TARGET Avaritia PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../lib/${CMAKE_BUILD_TYPE}/Avaritia.lib")
+endif()
 # set_property(TARGET Avaritia PROPERTY IMPORTED_IMPLIB "${PROJECT_SOURCE_DIR}/../lib/libAvaritia.a")
 # set_property(TARGET cpr PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../bin/")
 # set_property(TARGET cpr PROPERTY IMPORTED_IMPLIB "${PROJECT_SOURCE_DIR}/../lib/libcpr.dll.a")
@@ -83,7 +89,11 @@ find_package(unofficial-sodium CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
 
 include(CMakePrintHelpers)
 # cmake_print_variables(${stb_SOURCE_DIR})
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 file(GLOB ThirdPartyDLLS CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/../bin/*.dll")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+file(GLOB ThirdPartyDLLS CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/../bin/${CMAKE_BUILD_TYPE}/*.dll")
+endif()
 add_executable(${PROJECT_NAME} ${sources})
 
 foreach(_files  ${ThirdPartyDLLS})
@@ -127,7 +137,9 @@ target_link_libraries(${PROJECT_NAME} PUBLIC Avaritia nfd glfw glm::glm
 opengl32 stdc++fs
 nlohmann_json::nlohmann_json fmt::fmt 
 spdlog::spdlog_header_only cpr::cpr
-imgui::imgui  unofficial-sodium::sodium 
-unofficial-sodium::sodium_config_public  )
+imgui::imgui  unofficial-sodium::sodium
+)
 
-
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  target_link_libraries(${PROJECT_NAME} PUBLIC unofficial-sodium::sodium_config_public)
+endif()
