@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.14...3.22)
-
+cmake_minimum_required(VERSION 3.16...3.22)
+cmake_policy(SET CMP0091 NEW)
 if (DEFINED ENV{VCPKG_DEFAULT_TRIPLET})
   set(VCPKG_DEFAULT_TRIPLET $ENV{VCPKG_DEFAULT_TRIPLET})
 else()
@@ -26,8 +26,6 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_CXX_FLAGS "-static-libstdc++")
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  set(CMAKE_CXX_FLAGS "/NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib")
 endif()
 
 # # --- Import tools ----
@@ -71,7 +69,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 set_property(TARGET Avaritia PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../lib/libavaritia.a")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 cmake_print_variables(${CMAKE_BUILD_TYPE})
-set_property(TARGET Avaritia PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../lib/${CMAKE_BUILD_TYPE}/Avaritia.lib")
+set_target_properties(Avaritia PROPERTIES IMPORTED_LOCATION_RELEASE "${PROJECT_SOURCE_DIR}/../lib/Release/Avaritia.lib" IMPORTED_LOCATION_DEBUG "${PROJECT_SOURCE_DIR}/../lib/Debug/Avaritia.lib")
 endif()
 # set_property(TARGET Avaritia PROPERTY IMPORTED_IMPLIB "${PROJECT_SOURCE_DIR}/../lib/libAvaritia.a")
 # set_property(TARGET cpr PROPERTY IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../bin/")
@@ -82,7 +80,7 @@ endif()
 SET(CURL_ZLIB OFF CACHE STRING "" FORCE)
 SET(ZLIB_INCLUDE_DIR ${VCPKG_INSTALLED_DIR}/include)
 SET(ZLIB_LIBRARY ${VCPKG_INSTALLED_DIR}/lib)
-
+find_package(ZLIB)
 find_package(curl CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
 find_package(cpr CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
 find_package(fmt CONFIG REQUIRED HINTS ${VCPKG_INSTALLED_DIR})
@@ -100,8 +98,26 @@ file(GLOB ThirdPartyDLLS CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/../bin/*.dll")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 file(GLOB ThirdPartyDLLS CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/../bin/${CMAKE_BUILD_TYPE}/*.dll")
 endif()
-add_executable(${PROJECT_NAME} ${sources})
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  cmake_print_variables(CMAKE_CXX_COMPILER_ID)
+  set(CompilerFlags
+      CMAKE_CXX_FLAGS
+      CMAKE_CXX_FLAGS_DEBUG
+      CMAKE_CXX_FLAGS_RELEASE
+      CMAKE_C_FLAGS
+      CMAKE_C_FLAGS_DEBUG
+      CMAKE_C_FLAGS_RELEASE
+      )
+  foreach(CompilerFlag ${CompilerFlags})
+    string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+  endforeach()
+endif()
+
+add_executable(${PROJECT_NAME} ${sources})
+if(MSVC)
+target_compile_options( ${PROJECT_NAME} PUBLIC "/MT$<$<CONFIG:DEBUG>:d>")
+endif()
 foreach(_files  ${ThirdPartyDLLS})
   cmake_print_variables(${_files})
   add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest
@@ -137,10 +153,25 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17 OUTPUT_NAME "Av
 target_include_directories(${PROJECT_NAME} PUBLIC ${Stb_INCLUDE_DIR} "${ImGui-Addons_SOURCE_DIR}/FileBrowser" "${ImGui-Addons_SOURCE_DIR}/FileBrowser/Dirent"
 ${IconFontCppHeaders_SOURCE_DIR})
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  cmake_print_variables(CMAKE_CXX_COMPILER_ID)
+  set(CompilerFlags
+      CMAKE_CXX_FLAGS
+      CMAKE_CXX_FLAGS_DEBUG
+      CMAKE_CXX_FLAGS_RELEASE
+      CMAKE_C_FLAGS
+      CMAKE_C_FLAGS_DEBUG
+      CMAKE_C_FLAGS_RELEASE
+      )
+  foreach(CompilerFlag ${CompilerFlags})
+    string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+  endforeach()
+endif()
+
 target_sources(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/source/main.rc")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC Avaritia nfd glfw glm::glm 
-opengl32 stdc++fs
+opengl32
 nlohmann_json::nlohmann_json fmt::fmt 
 spdlog::spdlog_header_only cpr::cpr
 imgui::imgui  unofficial-sodium::sodium

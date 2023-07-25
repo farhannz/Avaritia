@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.14...3.22)
-
+cmake_minimum_required(VERSION 3.16...3.22)
+cmake_policy(SET CMP0091 NEW)
 # ---- Project ----
 if (DEFINED ENV{VCPKG_DEFAULT_TRIPLET})
   set(VCPKG_DEFAULT_TRIPLET $ENV{VCPKG_DEFAULT_TRIPLET})
@@ -26,12 +26,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
 message(
   FATAL_ERROR
   "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there."
   )
 endif()
-
+#set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")	
 
 # ---- Add dependencies via CPM ----
 # see https://github.com/TheLartians/CPM.cmake for more info
@@ -75,14 +76,16 @@ endif()
 file(GLOB_RECURSE headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h" )
 file(GLOB_RECURSE sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp" )
 
-
 # ---- Create library ----
 
 add_library(${PROJECT_NAME} STATIC ${headers} ${sources})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
-
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" "MultiThreaded$<$<CONFIG:Release>:Release>")
 # being a cross-platform target, we enforce standards conformance on MSVC
-target_compile_options(${PROJECT_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->")
+if(MSVC)
+target_compile_options( ${PROJECT_NAME} PUBLIC "/MT$<$<CONFIG:DEBUG>:d>")
+endif()
+target_compile_options(${PROJECT_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:/permissive->" )
 
 # Link dependencies
 target_include_directories(
@@ -94,6 +97,20 @@ target_include_directories(
                          ${Stb_INCLUDE_DIR}
                         #  ${stb_SOURCE_DIR}
 )
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  cmake_print_variables(CMAKE_CXX_COMPILER_ID)
+  set(CompilerFlags
+      CMAKE_CXX_FLAGS
+      CMAKE_CXX_FLAGS_DEBUG
+      CMAKE_CXX_FLAGS_RELEASE
+      CMAKE_C_FLAGS
+      CMAKE_C_FLAGS_DEBUG
+      CMAKE_C_FLAGS_RELEASE
+      )
+  foreach(CompilerFlag ${CompilerFlags})
+    string(REPLACE "/MD" "/MT" ${CompilerFlag} "${${CompilerFlag}}")
+  endforeach()
+endif()
 
 target_link_libraries(${PROJECT_NAME} PUBLIC 
 OpenGL::GL glfw glm::glm 
@@ -104,6 +121,7 @@ imgui::imgui  unofficial-sodium::sodium
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_link_libraries(${PROJECT_NAME} PUBLIC unofficial-sodium::sodium_config_public)
 endif()
+
 
 
 # add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
