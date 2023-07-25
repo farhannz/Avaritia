@@ -1,9 +1,9 @@
 name: Mingw cmake
 on:
   push:
-    branches: [ "cpm_test" ]
+    branches: "*"
   pull_request:
-    branches: [ "cpm_test" ]
+    branches: "*"
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
