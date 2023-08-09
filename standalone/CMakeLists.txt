@@ -136,13 +136,13 @@ foreach(_files  ${ThirdPartyDLLS})
   $<TARGET_FILE_DIR:AvaritiaLauncher>)                 # <--this is out-file path
 endforeach(_files)
 
-file(COPY "${PROJECT_SOURCE_DIR}/source/resources" DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
+# file(COPY "${PROJECT_SOURCE_DIR}/source/resources" DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
 
 
-# add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest
-#     COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
-#         "${PROJECT_SOURCE_DIR}/../bin/*"      # <--this is in-file
-#         $<TARGET_FILE_DIR:AvaritiaLauncher>)                 # <--this is out-file path
+add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest
+    COMMAND ${CMAKE_COMMAND} -E copy_directory  # which executes "cmake - E copy_if_different..."
+      "${PROJECT_SOURCE_DIR}/source/resources"      # <--this is in-file
+        $<TARGET_FILE_DIR:AvaritiaLauncher>/resources)                 # <--this is out-file path
 # add_custom_command(TARGET AvaritiaLauncher POST_BUILD        # Adds a post-build event to MyTest
 #     COMMAND ${CMAKE_COMMAND} -E copy_if_different  # which executes "cmake - E copy_if_different..."
 #         "${PROJECT_SOURCE_DIR}/../bin/*"      # <--this is in-file
