@@ -11,7 +11,7 @@
 #include <stb_image.h>
 #include <spdlog/spdlog.h>
 #include <imgui_format.h>
-#define AVARITIA_DEBUG true
+#define AVARITIA_DEBUG false
 
 // helper
 std::string getFromCookies(const std::string &key, const cpr::Cookies &cookie){
