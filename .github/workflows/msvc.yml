@@ -70,5 +70,7 @@ jobs:
         name: avaritia-launcher-msvc.zip
         path: |
           ${{github.workspace}}\\standalone\\bin\\Release\\
+          ${{github.workspace}}\\standalone\\bin\\Release\\resources
+          ${{github.workspace}}\\standalone\\bin\\Release\\resources\\fonts
         retention-days: 5
 
