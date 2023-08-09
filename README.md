@@ -1,9 +1,17 @@
-﻿# AVARITIA   
+﻿# AVARITIA   ![MinGW64 Build](https://github.com/farhannz/Avaritia/actions/workflows/mingw64.yml/badge.svg) ![MSVC Build](https://github.com/farhannz/Avaritia/actions/workflows/msvc.yml/badge.svg)
 
 
 ## A Community Project for a certain MMORPG developed by Japanese developers.   
-   
-### Prerequisites
+
+### Why?
+This project aims to add some QoL features, such as:
+* Auto Login (WIP)
+* Account Switcher (WIP)
+
+### Installation
+TBD
+
+### Build Prerequisites
 > VCPKG for dependencies management
 
 ### Disclaimer   
