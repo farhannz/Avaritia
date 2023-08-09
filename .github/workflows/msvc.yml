@@ -64,5 +64,13 @@ jobs:
       # Build your program with the given configuration
       run: cmake --build build\\standalone --config ${{env.BUILD_TYPE}} 
 
-
+    - uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r avaritia-launcher-msvc.zip ${{github.workspace}}\\standalone\\bin
+          
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: avaritia-launcher-msvc.zip
+        retention-days: 5
 
