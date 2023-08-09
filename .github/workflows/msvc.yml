@@ -68,6 +68,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: avaritia-launcher-msvc.zip
-        path: ${{github.workspace}}\\standalone\\bin\\Release\\**\*
+        path: |
+          ${{github.workspace}}\\standalone\\bin\\Release\\
         retention-days: 5
 
