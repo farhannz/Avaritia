@@ -17,7 +17,7 @@ This project aims to add some QoL features, such as:
 
 #### For first time usage:
 - Select your BP installation folder
-- When you login, you will need to enter your authentication code from email
+- When you login, it will count as a new device so it will ask for auth code.
 
 #### For updating the application:
 Currently there is no auto updater for the application.
