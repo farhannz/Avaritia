@@ -63,6 +63,14 @@ jobs:
     - name: Build Standalone GUI Launcher
       # Build your program with the given configuration
       run: cmake --build build\\standalone --config ${{env.BUILD_TYPE}} 
-
-
+          
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: avaritia-launcher-msvc.zip
+        path: |
+          ${{github.workspace}}\\standalone\\bin\\Release\\
+          ${{github.workspace}}\\standalone\\bin\\Release\\resources
+          ${{github.workspace}}\\standalone\\bin\\Release\\resources\\fonts
+        retention-days: 5
 
