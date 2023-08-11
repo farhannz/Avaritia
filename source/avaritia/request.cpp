@@ -94,7 +94,7 @@ namespace avaritia{
     }
 
     LoginTokenArgs avaritia::Request::getLoginToken(LoginTokenArgs args){
-        spdlog::set_level(spdlog::level::debug);
+        // spdlog::set_level(spdlog::level::debug);
         std::string ocean_session, ocean_hash;
         for(auto &c : args.cookies){
             spdlog::debug("{} : {}",c.GetName(), c.GetValue());
@@ -284,7 +284,7 @@ namespace avaritia{
     }
 
     std::string avaritia::Request::getLoginToken(LoginRequest request, std::string deviceId, std::string ocean_session,cpr::Cookies &cookie_out,  std::string accId){
-        spdlog::set_level(spdlog::level::debug);
+        // spdlog::set_level(spdlog::level::debug);
         cpr::Header currentHeader = launcherHeader;
         nlohmann::json param{
             {"acc_id",""},

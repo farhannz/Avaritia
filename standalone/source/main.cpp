@@ -6,7 +6,7 @@
 #include <spdlog/spdlog.h>
 auto main(int argc, char** argv) -> int {
   AvaritiaLauncher mainApp = AvaritiaLauncher("Avaritia Launcher", 610, 320);
-  spdlog::set_level(spdlog::level::debug);
+  // spdlog::set_level(spdlog::level::debug);
   mainApp.Init();
   
   mainApp.Run();
