@@ -2,6 +2,7 @@
 
 
 ## An alternative launcher for a certain MMORPG developed by Japanese developers.   
+![image](https://github.com/farhannz/Avaritia/assets/57488803/488325a1-dea7-4b50-b169-a766a5d79d43)
 
 ### Why?
 This project aims to add some QoL features, such as:
